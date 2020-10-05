@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-8">
+    <div class="card card-user">
+        <div class="card-header">
+        <h5 class="card-title">Agregar Contacto</h5>
+        </div>
+        <div class="card-body">
+            <form  autocomplete="off" [formGroup]="formEntrada">
+                <div class="row">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
+                        </div>
+                    </div>
+                    <div class="col-md-3 px-1">
+                        <div class="form-group">
+                        <label>Telefono</label>
+                        <input type="text" class="form-control" formControlName="telefono" placeholder="Telefono">
+                        </div>
+                    </div>
+                    <div class="col-md-3 px-1">
+                        <div class="form-group">
+                            <label>imagen</label>
+                            <img class="img-thumbnail">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" (click)="actualizarContacto()" class="btn btn-primary">Actualizar Contacto</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+
+    <div class="modal-header">
+        <h4 *ngIf="idDepartamento === undefined" class="modal-title" id="modal-basic-title">Crear Departamento</h4>
+        <h4 *ngIf="idDepartamento !== undefined" class="modal-title" id="modal-basic-title">Actualizar Departamento</h4>
+        <button type="button" class="close" aria-label="Close" (click)="salir()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12 pr-1">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Nombre" [(ngModel)]="modalDepartamento.nombre" name="nombre">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="button" class="btn btn-success" (click)="agregarPuesto()">Agregar puesto</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <th>
+                        Puesto
+                    </th>
+                    <th>
+                        Acción
+                    </th>
+                </thead>
+                <tbody>
+                    <ng-container>
+                        <tr *ngFor="let puesto of puestos; let i = index;">
+                            <td>
+                                <input type="text" 
+                              class="form-control"
+                              placeholder="Puesto"
+                              [(ngModel)]="puestos[i].nombre">
+                            </td>
+                            <td>
+                                <button class="btn btn-danger   btn-sm" (click)="eliminarPuesto(i)"><i class="nc-icon nc-simple-remove"></i></button>
+                            </td>
+                        </tr>
+                    </ng-container>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button *ngIf="idDepartamento === undefined" type="button" class="btn btn-outline-dark" (click)="crearDepartamento()">Crear</button>
+        <button *ngIf="idDepartamento !== undefined" type="button" class="btn btn-outline-dark" (click)="actualizarDepartamento()">Actualizar</button>
+    </div>
+  

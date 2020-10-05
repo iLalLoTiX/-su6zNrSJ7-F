@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-md-8">
+        <div class="card card-user">
+            <div class="card-header">
+            <h5 class="card-title">Actualizar Entrada Proveedor</h5>
+            </div>
+            <div class="card-body">
+                <form  autocomplete="off" [formGroup]="formEntrada">
+                    <div class="row">
+                        <div class="col-md-3 pr-1">
+                            <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" formControlName="proveedor" (keyup)="buscarProveedorInput($event)" placeholder="Proveedor"  list="proveedor">
+                            <datalist id="proveedor">
+                                <ng-container *ngFor="let proveedor of proveedores">
+                                    <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
+                                </ng-container>
+                            </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                            <label>Producto</label>
+                            <input type="text" class="form-control" formControlName="producto" (keyup)="buscarProductoInput($event)" placeholder="Producto" list="producto">
+                            <datalist id="producto">
+                                <ng-container *ngFor="let producto of productos">
+                                    <option value="{{producto.nombre}}">{{producto.nombre}}</option>
+                                </ng-container>
+                            </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-3 px-1">
+                            <div class="form-group">
+                            <label>Kg</label>
+                            <input type="number" class="form-control" formControlName="kg" placeholder="Kilos">
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" (click)="actualizarEntrada()" class="btn btn-primary">Actulizar entrada</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

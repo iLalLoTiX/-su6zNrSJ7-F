@@ -1,0 +1,45 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Agregar Cajas</h4>
+    <button type="button" class="close" aria-label="Close" (click)="salir()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <form autocomplete="off" [formGroup]="formEntrada">
+            <div class="row">
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nombre*"       formControlName="nombre" name="nombre">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Peso*"       formControlName="peso" name="peso">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Precio*"     formControlName="precio" name="precio">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Inventario*" formControlName="inventario" name="inventario">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Rotas"       formControlName="rotas" name="rotas">
+                    </div>
+                </div>
+                <div class="col-md-4 pr-1">
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Perdidas"    formControlName="perdidas" name="perdidas">
+                    </div>
+                </div>
+            </div>
+      </form>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="agregarCaja()">Save</button>
+  </div>

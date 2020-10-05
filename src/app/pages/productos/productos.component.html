@@ -1,0 +1,49 @@
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="card-title">Productos</h5>
+        <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-success btn-sm" (click)="agregarProducto()"><i class="nc-icon nc-simple-add"></i> Agregar</button>
+        </div>
+        <!-- <div class="col-md-2 px-1">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="busqueda">
+        </div> -->
+        <div class="col-md-2 px-1">
+            <button class="btn btn-warning btn-sm" (click)="buscarEmpleados()"><i class="nc-icon nc-zoom-split"></i></button>
+        </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary" >
+              <th>
+                SKU
+              </th>
+              <th>
+                Nombre
+              </th>
+              <th>
+                Acción
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of productos;let i = index">
+                <td>
+                  {{ producto.sku }}
+                </td>
+                <td>
+                  {{ producto.nombre }}
+                </td>
+                <td>
+                  <button class="btn btn-primary btn-sm" (click)="actualizarProducto(producto.uid)"><i class="nc-icon nc-ruler-pencil"></i></button>
+                  <button class="btn btn-danger btn-sm" (click)="borrarProducto(producto.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

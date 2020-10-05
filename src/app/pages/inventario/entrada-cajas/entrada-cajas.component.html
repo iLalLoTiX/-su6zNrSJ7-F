@@ -1,0 +1,62 @@
+
+    <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Cajas</h5>
+        </div>
+        <div class="card-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-success btn-sm" (click)="crearEntrada()"><i class="nc-icon nc-simple-add"></i> Agregar</button>
+                        <button class="btn btn-primary btn-sm" (click)="verMasEntradas()">Ver más</button>
+                    </div>
+                    <div class="col-md-2 px-1">
+                        <input type="text" class="form-control form-control-sm" [(ngModel)]="busqueda">
+                    </div>
+                    <div class="col-md-2 px-1">
+                        <button class="btn btn-warning btn-sm" (click)="buscarEntradaPorEmpleado()"><i class="nc-icon nc-zoom-split"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary" >
+                <th>
+                  Nombre
+                </th>
+                <th>
+                  Revisado
+                </th>
+                <th>
+                  Fecha
+                </th>
+                <th>
+                    Acción
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let entrada of entradaCajas; let i = index" (click)="seleccionarCaja(caja)" style="cursor:pointer;">
+                  <td>
+                      {{ entrada.chofer }}
+                  </td>
+                  <td *ngIf="entrada.revisado">
+                      Sí
+                  </td>
+                  <td *ngIf="!entrada.revisado">
+                      No
+                  </td>
+                  <td>
+                      {{ entrada.fechaEntrada | date}}
+                  </td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="actualizarEntrada(entrada.uid)"><i class="nc-icon nc-minimal-up"></i></button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarEntrada(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>

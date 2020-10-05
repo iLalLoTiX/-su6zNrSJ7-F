@@ -1,0 +1,61 @@
+<div class="row">
+    <app-departamentos  class="col-md-4"></app-departamentos>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Empleados</h5>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-3">
+                <button class="btn btn-success btn-sm" (click)="agregarEmpleado()"><i class="nc-icon nc-simple-add"></i> Agregar</button>
+                <button class="btn btn-primary btn-sm" (click)="verEmpleados()">Ver más</button>
+              </div>
+              <div class="col-md-2 px-1">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="busqueda">
+              </div>
+              <div class="col-md-2 px-1">
+                <button class="btn btn-warning btn-sm" (click)="buscarEmpleados()"><i class="nc-icon nc-zoom-split"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary" >
+                <th>
+                  ID
+                </th>
+                <th>
+                  Nombre
+                </th>
+                <th>
+                  Telefono
+                </th>
+                <th>
+                  Acción
+                </th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let empleado of empleados;let i = index">
+                  <td>
+                    {{ empleado.idInterno }}
+                  </td>
+                  <td>
+                    {{ empleado.nombre }}
+                  </td>
+                  <td>
+                    {{ empleado.telefono }}
+                  </td>
+                  <td>
+                    <button class="btn btn-primary btn-sm" (click)="actualizarEmpleado(empleado.uid, i)"><i class="nc-icon nc-ruler-pencil"></i></button>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarEmpleado(empleado.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

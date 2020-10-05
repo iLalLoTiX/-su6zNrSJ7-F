@@ -1,0 +1,169 @@
+<div class="row">
+    <div class="col-md-3">
+      <div class="card card-user">
+        <div class="image">
+          <img src="assets/img/damir-bosnjak.jpg" alt="...">
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="#">
+              <img *ngIf="!imgTemp" class="avatar border-gray" src="{{imgURL}}" alt="...">
+              <img *ngIf="imgTemp" class="avatar border-gray" src="{{imgTemp}}" alt="...">
+              <h5 class="title">Chet Faker</h5>
+            </a>
+            <p class="description">
+              @chetfaker
+            </p>
+          </div>
+          <p class="description text-center">
+            "I like the way you work it
+            <br> No diggity
+            <br> I wanna bag it up"
+          </p>
+        </div>
+        <div class="card-footer">
+          <hr>
+          <div class="button-container">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-6 ml-auto">
+                <h5>12
+                  <br>
+                  <small>Files</small>
+                </h5>
+              </div>
+              <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
+                <h5>2GB
+                  <br>
+                  <small>Used</small>
+                </h5>
+              </div>
+              <div class="col-lg-3 mr-auto">
+                <h5>24,6$
+                  <br>
+                  <small>Spent</small>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card card-user">
+        <div class="card-header">
+          <h5 class="card-title">{{evento}}</h5>
+        </div>
+        <div class="card-body">
+          <form  autocomplete="off" [formGroup]="formEntrada">
+            <div class="row">
+              <div class="col-md-2 pr-1">
+                <div class="form-group">
+                  <label>ID</label>
+                  <input type="text" class="form-control" formControlName="idInterno" placeholder="ID">
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre">
+                </div>
+              </div>
+              <div class="col-md-4 px-1">
+                <div class="form-group">
+                  <label>Correo</label>
+                  <input type="email" class="form-control" formControlName="correo" placeholder="Correo">
+                </div>
+              </div>
+              <div class="col-md-3 pl-1">
+                <div class="form-group">
+                  <label>Telefono</label>
+                  <input type="number" class="form-control" formControlName="telefono" placeholder="Telefono">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Emergencia</label>
+                  <input type="number" class="form-control" formControlName="emergencia" placeholder="Emergencia">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Departamento</label>
+                  <select  class="form-control" formControlName="departamento" placeholder="Departamento">
+                    <ng-container *ngFor="let departamento of departamentos">
+                      <option value="{{departamento.uid}}">{{departamento.nombre}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Puesto</label>
+                  <select  class="form-control" formControlName="puesto" placeholder="Puesto">
+                    <ng-container *ngFor="let puestoEmpleado of puestos">
+                      <option value="{{puestoEmpleado.nombre}}">{{puestoEmpleado.nombre}}</option>
+                    </ng-container>
+                  </select>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <input type="text" class="form-control" formControlName="direccion" placeholder="Dirección">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 pr-1">
+                <div class="form-group">
+                  <label>Ciudad</label>
+                  <input type="text" class="form-control" formControlName="ciudad" placeholder="Ciudad">
+                </div>
+              </div>
+              <div class="col-md-4 px-1">
+                <div class="form-group">
+                  <label>Sangre</label>
+                  <input type="text" class="form-control" formControlName="sangre" placeholder="Sangre">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label>Sexo</label>
+                  <select  class="form-control" formControlName="sexo">
+                      <option value="Hombre">Hombre</option>
+                      <option value="Mujer">Mujer</option>
+                      <option value="Hombre Trans">Hombre Trans</option>
+                      <option value="Mujer Trans">Mujer Trans</option>
+                      <option value="No Binario">No Binario</option>
+                      <option value="Asexual">Asexual</option>
+                      <option value="Ermafrodita">Ermafrodita</option>
+                      <option value="Prefiero no decirlo">Prefiero no decirlo</option>
+                      <option value="Helicoptero Apache de combate">Helicoptero Apache de combate</option>
+                      <option value="Solo el PRI puede gobernar este pais">Solo el PRI puede gobernar este pais</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="cambiarImagen($event.target.files[0])">
+                  <label class="custom-file-label" for="validatedCustomFile">Selecciona una imagen</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              
+              <div class="update ml-auto mr-auto">
+                <button *ngIf="banderaID !== 'nuevo'" type="button" (click)="actualizarEmpleado()" class="btn btn-primary btn-round">Actualizar Empleado</button>
+                <button *ngIf="banderaID === 'nuevo'" type="button" (click)="crearEmpleado()" class="btn btn-primary btn-round">Crear Empleado</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

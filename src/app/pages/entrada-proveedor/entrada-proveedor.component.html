@@ -1,0 +1,150 @@
+<div class="col-md-12">
+  <div class="card">
+      <div class="card-header">
+          <h5 class="card-title">Filtrar Entradas</h5>
+          
+        <div class="col-md-4">
+            <div class="card ">
+            <div class="card-header ">
+                <h5 class="card-title">Merma Estadisticas</h5>
+                <p class="card-category">Bueno: {{porcentajeBueno | percent}} | Malo: {{porcentajeMalo| percent}}</p>
+            </div>
+            <div class="card-body ">
+                <canvas id="chartEmail"></canvas>
+            </div>
+            <div class="card-footer ">
+                <div class="legend">
+                <i class="fa fa-circle text-primary"></i> Bueno
+                <i class="fa fa-circle text-danger"></i> Malo
+                </div>
+            </div>
+            </div>
+        </div>
+
+          <div class="row">
+              <div class="col-md-1 px-1">
+                  <label>Registros</label>
+                  <select  class="form-control" [(ngModel)]="limite" (change)="filtrar()">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                  </select>
+              </div>
+              <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                      <label>Proveedor</label>
+                      <input type="text" class="form-control" autocomplete="off" (change)="buscarContactoEstricto()" [(ngModel)]="filtro.proveedor" (keyup)="buscarProveedorInput($event)" name="proveedor" type="text" list="proveedor" />
+                      <datalist id="proveedor">
+                          <ng-container *ngFor="let proveedor of proveedores">
+                              <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
+                          </ng-container>
+                      </datalist>
+                  </div>
+              </div>
+              <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                      <label>Producto</label>
+                      <input type="text" class="form-control" autocomplete="off" (change)="buscarProductoEstricto()" [(ngModel)]="filtro.producto" (keyup)="buscarProductoInput($event)" name="producto" type="text" list="producto" />
+                      <datalist id="producto">
+                          <ng-container *ngFor="let producto of productos">
+                              <option value="{{producto.nombre}}">{{producto.nombre}}</option>
+                          </ng-container>
+                      </datalist>
+                  </div>
+              </div>
+              <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                      <label>Inicio</label>
+                      <input class="form-control" type="date" [(ngModel)]="filtro.fechaUno" name="inicio">
+                  </div>
+              </div>
+              <div class="col-md-2 pr-1">
+                  <div class="form-group">
+                      <label>Fin</label>
+                      <input class="form-control" type="date" [(ngModel)]="filtro.fechaDos" name="fin">
+                  </div>
+              </div>
+              <div class="col-md-1 pr-1">
+                  <div class="form-group">
+                      <button type="button" class="btn btn-warning btn-sm" (click)="filtrar()"><i class="nc-icon nc-zoom-split"></i>filtrar</button>
+                  </div>
+              </div>
+              <div class="col-md-1">
+                  <button class="btn btn-success btn-sm" (click)="crearEntradaProveedor()"><i class="nc-icon nc-simple-add"></i> Agregar</button>
+              </div>
+          </div>
+      </div>
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table">
+                  <thead class=" text-primary" >
+                      <th>
+                      Proveedor
+                      </th>
+                      <th>
+                      Kg
+                      </th>
+                      <th>
+                      Producto
+                      </th>
+                      <th>
+                      Entrada
+                      </th>
+                      <th>
+                      Revisado
+                      </th>
+                      <th>
+                          Acción
+                      </th>
+                      <th>
+                          Malo
+                      </th>
+                      <th>
+                          Bueno
+                      </th>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let entrada of entradasProveedor;let i = index">
+                          <td>
+                              {{ entrada.proveedor.nombre }}
+                          </td>
+                          <td>
+                              {{ entrada.kg }}
+                          </td>
+                          <td>
+                              {{ entrada.producto.nombre }}
+                          </td>
+                          <td>
+                              {{ entrada.fechaEntrada | date:shortDate }}
+                          </td>
+                          <th>
+                              <button *ngIf="entrada.revisado" class="btn btn-success btn-sm" (click)="editarRevisarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-check-2"></i></button>
+                              <button *ngIf="!entrada.revisado" class="btn btn-warning btn-sm" (click)="revisarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-layout-11"></i></button>
+                          </th>
+                          <td>
+                              <button *ngIf="!entrada.revisado" class="btn btn-primary btn-sm" (click)="actualizarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-ruler-pencil"></i></button>
+                              <button class="btn btn-danger btn-sm" (click)="borrarEntradaProveedor(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                          </td>
+                          <td>
+                              {{ entrada.malo}}
+                          </td>
+                          <td>
+                              {{ entrada.bueno}}
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="card-footer">
+          <div class="row ">
+              <div class="col-md-1">
+                  <button class="btn btn-primary btn-sm" (click)="cambiarPagina(-5)"><i class="nc-icon nc-minimal-left"></i></button>
+              </div>
+              <div class="col-md-1 px-1">
+                  <button class="btn btn-primary btn-sm" (click)="cambiarPagina(5)"><i class="nc-icon nc-minimal-right"></i></button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
