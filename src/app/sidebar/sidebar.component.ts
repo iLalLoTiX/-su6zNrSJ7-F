@@ -21,6 +21,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/entradaProveedor',    title: 'Entradas Proveedor',    icon:'nc-share-66',     class: '' },
     { path: '/contacto',            title: 'Contactos',             icon:'nc-single-02',    class: '' },
     { path: '/productos',           title: 'Productos',             icon:'nc-tag-content',  class: '' },
+    { path: '/ordenesdecompra',     title: 'Ordenes',               icon:'nc-single-copy-04',  class: '' },
 ];
 
 @Component({

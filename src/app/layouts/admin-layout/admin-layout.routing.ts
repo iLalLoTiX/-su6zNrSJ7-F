@@ -28,6 +28,9 @@ import { AgregarEntradaProveedorComponent }     from '../../pages/entrada-provee
 import { ActualizarEntradaProveedorComponent }  from '../../pages/entrada-proveedor/actualizar-entrada-proveedor/actualizar-entrada-proveedor.component';
 import { RevisarEntradaProveedorComponent }     from '../../pages/entrada-proveedor/revisar-entrada-proveedor/revisar-entrada-proveedor.component';
 import { RevisarEntradaEditarComponent }        from '../../pages/entrada-proveedor/revisar-entrada-editar/revisar-entrada-editar.component';
+import { OrdenesComponent }                     from '../../pages/ordenes/ordenes.component';
+import { CrearOrdenComponent }                  from '../../pages/ordenes/crear-orden/crear-orden.component';
+import { EditarOrdenComponent }                 from '../../pages/ordenes/editar-orden/editar-orden.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -62,4 +65,8 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'agregarProducto',                      component: AddProductoComponent },
     { path: 'agregarContacto',                      component: AgregarContactoComponent },
     { path: 'actualizarContacto/:id',               component: ActualizarContactoComponent },
+    
+    { path: 'ordenesdecompra',                      component: OrdenesComponent },
+    { path: 'crearOrden',                           component: CrearOrdenComponent },
+    { path: 'editarOrden/:id',                      component: EditarOrdenComponent },
 ];  

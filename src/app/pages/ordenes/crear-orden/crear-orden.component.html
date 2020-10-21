@@ -1,0 +1,85 @@
+
+    <div class="col-md-8">
+        <div class="card card-user">
+            <div class="card-header">
+            <h5 class="card-title">Crear Orden</h5>
+            </div>
+            <div class="card-body">
+            <form  autocomplete="off">
+                <div class="row">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" class="form-control" 
+                        [(ngModel)]="orden.proveedor" 
+                        name="proveedor" 
+                        (keyup)="buscarProveedorInput($event)" 
+                        [attr.placeholder]="orden.proveedor"  
+                        list="proveedor">
+                            <datalist id="proveedor">
+                                <ng-container *ngFor="let proveedor of proveedores">
+                                    <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
+                                </ng-container>
+                            </datalist>
+                        </div>
+                    </div>
+                    <div class="col-md-3 px-1">
+                        <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" class="form-control" name="fecha" [(ngModel)]="orden.fecha" [attr.placeholder]="orden.fecha">
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <button type="button" (click)="crearOrden()" class="btn btn-success btn-sm"><i class="nc-icon nc-check-2"></i></button>
+                            <button type="button" (click)="agregarProducto()" class="btn btn-primary btn-sm"><i class="nc-icon nc-simple-add"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>#</th>
+                                <th>producto</th>
+                                <th>kg</th>
+                                <th>borrar</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let producto of orden.productos; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <input type="text" class="form-control"  
+                                        [(ngModel)]="producto.nombre" 
+                                        [name]="producto.nombre" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.placeholder]="producto.nombre" 
+                                        (keyup)="buscarProductoInput($event)" (blur)="comprobarProducto(producto.nombre, i)"
+                                        list="producto">
+                                        <datalist id="producto">
+                                            <ng-container *ngFor="let prod of prods">
+                                                <option value="{{prod.nombre}}">{{prod.nombre}}</option>
+                                            </ng-container>
+                                        </datalist>
+                                    </td>
+                                    <td>
+                                        <input type="number"
+                                        class="form-control"  
+                                        [(ngModel)]=producto.kg
+                                        [name]="producto.kg" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.placeholder]="producto.kg">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm"><i class="nc-icon nc-simple-remove"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>

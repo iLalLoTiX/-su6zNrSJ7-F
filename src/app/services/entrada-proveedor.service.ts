@@ -11,8 +11,8 @@ export class EntradaProveedorService {
 
   constructor(public http : HttpClient) { }
 
-  getEntradasProveedor(desde: number, limite: number){
-    return this.http.get(base_url + '/entradaProveedor?desde=' + desde  + '&limite=' + limite ).toPromise();
+  getEntradasProveedor(){
+    return this.http.get(base_url + '/entradaProveedor' ).toPromise();
   }
 
   porcentajeMermas(filtro){

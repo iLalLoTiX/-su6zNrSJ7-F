@@ -56,17 +56,17 @@ export class EntradaProveedorComponent implements OnInit {
   constructor(
     private ServicioEntradasProveedor: EntradaProveedorService, 
     private router: Router, 
-    private ServicioEntradaProveedores : EntradaProveedorService,
     private ServicioProveedor: ContactosService, 
     private ServicioProducto: ProductosService) {
-    if(this.router.getCurrentNavigation().extras.state){
-      this.params = this.router.getCurrentNavigation().extras.state;
-      this.filtro.proveedor = this.params.proveedor;
-      this.filtro.producto = this.params.producto;
-      this.filtro.fechaUno = this.params.fechaUno;
-      this.filtro.fechaDos = this.params.fechaDos;
-    } 
-    this.filtrar();
+      this.ServicioEntradasProveedor.getEntradasProveedor().then((a:any) => {
+        this.entradasProveedor = a.entradasProveedor;
+      }).catch((a:any)=> {console.log(a);});
+  }
+
+  refrescarEntradaProveedor(){
+    this.ServicioEntradasProveedor.getEntradasProveedor().then((a:any) => {
+      this.entradasProveedor = a.entradasProveedor;
+    }).catch((a:any)=> {console.log(a);});
   }
 
   buscarContactoEstricto(){
@@ -107,7 +107,7 @@ export class EntradaProveedorComponent implements OnInit {
     this.enviar.fechaDos = this.filtro.fechaDos;
     console.log(this.enviar);
     // Entrada Proveedor
-    this.ServicioEntradaProveedores.filtrarEntradaProveedor(this.enviar, this.desde, this.limite).then((a:any)=> {
+    this.ServicioEntradasProveedor.filtrarEntradaProveedor(this.enviar, this.desde, this.limite).then((a:any)=> {
       this.entradasProveedor = a.entradasProveedor;
       this.graficaPastel(a.malo, a.kgTotal);
       this.porcentajeMalo = a.malo / a.kgTotal;
