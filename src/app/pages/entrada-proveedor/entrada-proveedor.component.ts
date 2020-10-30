@@ -59,7 +59,8 @@ export class EntradaProveedorComponent implements OnInit {
     private ServicioProveedor: ContactosService, 
     private ServicioProducto: ProductosService) {
       this.ServicioEntradasProveedor.getEntradasProveedor().then((a:any) => {
-        this.entradasProveedor = a.entradasProveedor;
+        this.entradasProveedor = a.entrada;
+        console.log(a);
       }).catch((a:any)=> {console.log(a);});
   }
 
@@ -161,7 +162,7 @@ export class EntradaProveedorComponent implements OnInit {
   }
   
   crearEntradaProveedor(){
-    this.router.navigate(['crearEntradaProveedor']);
+    this.router.navigate(['crearEntradaProveedor/nuevaEntrada']);
   }
 
   actualizarEntradaProveedor(id: string){

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { EntradaProveedorService } from 'app/services/entrada-proveedor.service';
 import { ContactosService } from 'app/services/contactos.service';
 import { ProductosService } from 'app/services/productos.service';
+import * as moment from 'moment';
+import { OrdenesService } from 'app/services/ordenes.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-entrada-proveedor',
@@ -12,19 +15,20 @@ import { ProductosService } from 'app/services/productos.service';
 })
 export class AgregarEntradaProveedorComponent implements OnInit {
 
-  public dataEntrada = {
+  public orden = {
+    ordenCompra: '',
     proveedor: '',
-    producto: '',
-    kg: 0,
+    productos: new Array(),
+    fecha: moment().format('YYYY-MM-DD')
   };
+
 
   public enviar = {
+    ordenCompra: '',
     proveedor: '',
-    producto: '',
-    kg: 0,
+    productos: new Array(),
+    fechaDeEntrada: '',
   };
-
-  public pasa = true;
 
   public typingTimer;                //timer identifier
   public doneTypingInterval = 300;  //time in ms (5 seconds)
@@ -33,11 +37,28 @@ export class AgregarEntradaProveedorComponent implements OnInit {
   public productos;
 
   constructor(
+    private ServicioOrden: OrdenesService,
     public ServicioEntradasProveedor: EntradaProveedorService,
-    private fb: FormBuilder,
     private ServicioProveedor: ContactosService,
-    private ServicioProducto: ProductosService) {
+    private ServicioProducto: ProductosService,
+    private rutaActiva: ActivatedRoute) {
+    
+      
+      if(this.rutaActiva.snapshot.params.id != 'nuevaEntrada'){
+        this.ServicioOrden.getOrden(this.rutaActiva.snapshot.params.id).subscribe((a:any) => {
 
+          this.orden.ordenCompra = a.orden.ordenCompra
+          this.orden.proveedor = a.orden.proveedor.nombre;
+          
+          for(let i = 0; i < a.orden.productos.length; i++){
+            console.log(a.orden.productos[i]);
+            this.orden.productos.push({nombre: a.orden.productos[i].producto.nombre, kg: a.orden.productos[i].cantidad})
+          }
+
+        });
+      }else{
+        console.log(this.rutaActiva.snapshot.params.id);
+      }
   }
 
   ngOnInit(): void {
@@ -71,58 +92,79 @@ export class AgregarEntradaProveedorComponent implements OnInit {
 
   async crearEntrada()
   {
-    if(this.dataEntrada.proveedor == '' || this.dataEntrada.producto == '' || this.dataEntrada.kg <= 0){
+    if(this.orden.proveedor == ''){
       return Swal.fire(
         'Atención',
-        'Llene todos los campos',
+        'Seleccione un proveedor',
         'warning'
       );
     }
-    this.pasa = true;
-    //Validacion proveedor
-    await this.ServicioProveedor.buscarContactoEstricto(this.dataEntrada.proveedor).then(
+
+    //Si se ingreso un proveedor, se comprueba si dicho proveedor existe en la base de datos
+    await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
       (res:any) => {
         this.enviar.proveedor = res.contacto.uid;
     }).catch(
-      (err: any) => {  
-        this.pasa = false;
-        return this.errorProveedor();
-    });
+      (err: any) => {
+        //si no se encontro al proveedor en la base de datos se termina el proceso
+        return Swal.fire(
+          'Atención',
+          err.error.msg,
+          'warning'
+        );}
+    );
 
-    if(!this.pasa){
-      return;
-    }
-    //Validacion Producto
-    await this.ServicioProducto.buscarProductoEstricto(this.dataEntrada.producto).then(
-      (res:any) => {
-        this.enviar.producto = res.producto.uid;
-    }).catch(
-      (err: any) => {  
-        this.pasa = false;
-        return this.errorProducto();
-    });
-    
-    if(!this.pasa){
-      return;
-    }
-
-    this.enviar.kg = this.dataEntrada.kg;
-
-    await this.ServicioEntradasProveedor.postEntradaProveedor(this.enviar).then((a:any) => {
-
-      Swal.fire(
-        'Listo',
-        'Se agrego una entrada de producto',
-        'success'
-      );
-      return;
-    }).catch( err => {
+    //se pregunta si hay productos en la orden de compra
+    if(this.orden.productos.length <= 0){
+      //Si no hay se cancela la operación y envia un mensaje
       return Swal.fire(
-        'Error',
-        'Hubo un error ponganse en contacto con el maestro del calabozo',
-        'error'
+        'Atención',
+        'Agregue productos a la orden de compra!',
+        'warning'
       );
-    });
+    }
+
+    let i = this.orden.productos.length;
+    if(this.orden.productos[i - 1].nombre == ''){
+      return Swal.fire(
+        'Atencíon',
+        'Selecciona un producto en la fila ' + i,
+        'warning');
+    }
+
+    if(this.orden.productos[this.orden.productos.length - 1].kg <= 0){
+      return Swal.fire(
+        'Atencíon',
+        'Agregue una cantidad en la fila ' + i,
+        'warning');
+    }
+
+    for(let o = 0; o < i; o++)
+    {
+      
+      //Si hay asignada una cantidad y un producto, se verifica la existencia del producto  
+      await this.ServicioProducto.buscarProductoEstricto(this.orden.productos[o].nombre).then(
+        (res:any) => {
+          //Si el producto existe, se agrega al array, para preparase para su envio a la peticion a la base de datos
+          this.enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
+      }).catch(
+        (err: any) => { 
+          return this.devolverError(err.error.msg);
+      });
+    
+    }
+
+    this.enviar.fechaDeEntrada = this.orden.fecha;
+    console.log(this.enviar);
+    this.ServicioEntradasProveedor.postEntradaProveedor(this.enviar).subscribe(
+      data => {
+        console.log(data);
+        Swal.fire(
+          'Exito',
+          'Entrada creada correctamente',
+          'success');
+      },
+      err => console.log(err));
   }
 
   errorProveedor(){
@@ -138,12 +180,12 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         const proveedor = {nombre: ''}; 
-        proveedor.nombre = this.dataEntrada.proveedor;
+        proveedor.nombre = this.orden.proveedor;
         console.log(proveedor);
         this.ServicioProveedor.postContacto(proveedor).then(a=>{
           return Swal.fire(
             'Exito',
-            'Se ha creado el producto, agregue de nuevo la entrada',
+            'Se ha creado el proveedor',
             'success'
           );
         }).catch(a=>{
@@ -158,7 +200,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     });
   }
 
-  errorProducto(){
+  errorProducto(nombre, i){
     Swal.fire({
       title: 'Atencion',
       text: "El producto solicitado no existe ¿Quieres crearlo?",
@@ -170,12 +212,15 @@ export class AgregarEntradaProveedorComponent implements OnInit {
       cancelButtonText: 'No'
     }).then((result) => {
       if (result.value) {
-        this.agregarProducto();
+        this.agregarProducto(nombre, i);
+      }
+      else{
+        this.orden.productos.splice(i, 1);
       }
     });
   }
 
-  agregarProducto(){
+  agregarProducto(nombre, i){
     Swal.mixin({
       input: 'text',
       confirmButtonText: 'Next &rarr;',
@@ -189,7 +234,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
       if (result.value) {
         const answers = result.value;
         const producto = {nombre: '', sku: ''}; 
-        producto.nombre = this.dataEntrada.producto;
+        producto.nombre = nombre;
         producto.sku = answers[0];
         console.log(producto);
         this.ServicioProducto.postProductos(producto).then(a=>{
@@ -209,4 +254,85 @@ export class AgregarEntradaProveedorComponent implements OnInit {
       }
     })
   }
+
+  anadirFila(){
+    let i = this.orden.productos.length;
+    if(i == 0){
+      this.orden.productos.push({nombre: '', kg: 0});
+    }
+    else{
+      if(this.orden.productos[i - 1].nombre == ''){
+        return Swal.fire(
+          'Atencíon',
+          'Selecciona un producto en la fila ' + i,
+          'warning');
+      }
+
+      if(this.orden.productos[this.orden.productos.length - 1].kg <= 0){
+        return Swal.fire(
+          'Atencíon',
+          'Agregue una cantidad en la fila ' + i,
+          'warning');
+      }
+      
+      this.orden.productos.push({nombre: '', kg: 0});
+    }
+    
+    console.log(this.orden.productos.length);
+    console.log(this.orden.productos[this.orden.productos.length - 1].nombre);
+  }
+
+  eliminarProducto(i){
+    Swal.fire({
+    text: 'Quieres borrar este producto de la orden?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Borrarlo',
+    cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.orden.productos.splice(i, 1);
+      }
+    });
+  }
+
+  async comprobarProducto(nombre: string, i: number){
+
+    if( nombre == ''){
+      this.orden.productos.splice(i, 1);
+      return;
+    }
+    
+    //Validacion Producto
+    await this.ServicioProducto.buscarProductoEstricto(nombre).then(
+      (res:any) => {
+        this.orden.productos[i].id = res.producto.uid;
+    }).catch(
+      (err: any) => {  
+        return this.errorProducto(nombre, i);
+    });
+  }
+
+  async comprobarProveedor(){
+    if( this.orden.proveedor == ''){
+      return;
+    }
+    await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
+      (res:any) => {
+        this.enviar.proveedor = res.contacto.uid;
+    }).catch(
+      (err: any) => {  
+        return this.errorProveedor();
+    });
+  }
+
+  devolverError(error){
+    Swal.fire(
+      'Atencíon',
+      error,
+      'warning');
+  }
+
 }

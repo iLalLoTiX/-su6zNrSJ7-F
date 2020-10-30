@@ -1,0 +1,72 @@
+
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th scope="row" class="text-center">
+            </th>
+            <ng-container *ngFor="let fecha of fechas">
+                <th class="text-center"> <ng-container *ngIf="fecha == hoy">(Hoy) </ng-container>{{fecha | date: 'EEEE, MMM d, y,'}}</th>
+            </ng-container>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let producto of productos; let i = index">
+            <tr>
+                <th >
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <div class="card text-white bg-dark align-items-center" style="max-width: 12rem; cursor: pointer;" (click)="seleccionarOrden(producto)">
+                            <div class="card-body">
+                                <h3 class="text-center"><b>{{producto.nombre}}</b></h3>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <ng-container *ngFor="let fecha of fechas; let o = index">
+                    <ng-container *ngIf="tabla[i][o].length > 0; else loggedOut">
+                    <td [ngClass]="{'bg-info': fecha === hoy}">
+                        <div class="card-deck " style="display: flex; justify-content: center; align-items: center;">
+                        <ng-container *ngFor="let orden of tabla[i][o]; let p = index">
+                            <ng-container *ngIf="orden.orden.estado === 'pendiente'">
+                                <div class="card text-dark bg-warning" style="max-width: 10rem; cursor: pointer;"
+                                placement="right"
+                                [ngbPopover]="HelpContent" 
+                                (click)="seleccionarOrden(orden.orden.uid)">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center"><b>{{orden.orden.proveedor.nombre}}</b></h5><hr>
+                                        <h1 class="text-center"><b>{{orden.producto.cantidad}}</b></h1>
+                                    </div>
+                                </div>
+                                <ng-template #HelpContent>
+                                    <button class="btn btn-primary btn-sm" (click)="editarOrden()"><i class="nc-icon nc-minimal-up"></i></button>
+                                    <button *ngIf="fecha === hoy" class="btn btn-warning btn-sm" (click)="registrarOrden()"><i class="nc-icon nc-check-2"></i></button>
+                                    <button class="btn btn-danger btn-sm" (click)="eliminarOrden()"><i class="nc-icon nc-simple-remove"></i></button>
+                                </ng-template>
+                            </ng-container>
+                            <ng-container *ngIf="orden.orden.estado === 'registrado'">
+                                <div class="card text-dark bg-success mb-3" style="max-width: 10rem; cursor: pointer;"
+                                placement="right"
+                                [ngbPopover]="HelpContent" 
+                                (click)="seleccionarOrden(orden.orden.uid)">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center"><b>{{orden.orden.proveedor.nombre}}</b></h5><hr>
+                                        <h1 class="text-center"><b>{{orden.producto.cantidad}}</b></h1>
+                                    </div>
+                                </div>
+                                <ng-template #HelpContent>
+                                    <button class="btn btn-primary btn-sm" (click)="editarOrden()"><i class="nc-icon nc-minimal-up"></i></button>
+                                    <button *ngIf="fecha === hoy" class="btn btn-warning btn-sm" (click)="registrarOrden()"><i class="nc-icon nc-check-2"></i></button>
+                                    <button class="btn btn-danger btn-sm" (click)="eliminarOrden()"><i class="nc-icon nc-simple-remove"></i></button>
+                                </ng-template>
+                            </ng-container>
+                        </ng-container>
+                        </div>
+                    </td>  
+                    </ng-container>
+                    <ng-template #loggedOut>
+                        <td [ngClass]="{'bg-info': fecha === hoy}"></td>
+                    </ng-template>
+                </ng-container>
+            </tr>
+        </ng-container>
+    </tbody>
+</table>

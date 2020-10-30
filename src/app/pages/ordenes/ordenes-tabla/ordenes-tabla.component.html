@@ -1,0 +1,35 @@
+<table class="table table-dark">
+    <thead >
+        <tr>
+            <th scope="col">#</th>
+            <th>Nombre</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+            <th>Productos</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let orden of tabla; let i = index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{orden.proveedor.nombre}}</td>
+            <td>{{orden.fechaDeEntrada | date: 'EEEE, MMM d, y,'}}</td>
+            <td *ngIf="orden.estado == 'registrado'"><span class="badge badge-success">{{orden.estado}}</span></td>
+            <td *ngIf="orden.estado == 'pendiente'"><span class="badge badge-warning">{{orden.estado}}</span></td>
+            <td><span class="badge badge-info" style="cursor: pointer;"
+                placement="right"
+                [ngbPopover]="HelpContent">{{orden.productos.length}}</span></td>
+            
+            <ng-template #HelpContent>
+                <ng-container *ngFor="let producto of orden.productos; let i = index">
+                    <h5><span class="badge badge-primary">{{producto.producto.nombre}}</span></h5>
+                </ng-container>
+            </ng-template>
+            <td>
+                <button class="btn btn-primary btn-sm" (click)="editarOrden(orden.uid)"><i class="nc-icon nc-minimal-up"></i></button>
+                <button *ngIf="hoy == orden.fechaDeEntrada" class="btn btn-warning btn-sm" (click)="registrarOrden(orden.uid)"><i class="nc-icon nc-check-2"></i></button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarOrden(orden.uid)"><i class="nc-icon nc-simple-remove"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -3,7 +3,7 @@
       <div class="card-header">
           <h5 class="card-title">Filtrar Entradas</h5>
           
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
             <div class="card ">
             <div class="card-header ">
                 <h5 class="card-title">Merma Estadisticas</h5>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-md-1 px-1">
                 <label>Registros</label>
@@ -76,57 +76,69 @@
                     <table class="table">
                         <thead class=" text-primary" >
                             <th>
-                            Proveedor
+                                Proveedor
                             </th>
                             <th>
-                            Kg
+                                Entrada
                             </th>
                             <th>
-                            Producto
+                                Productos
                             </th>
                             <th>
-                            Entrada
-                            </th>
-                            <th>
-                            Revisado
+                                Merma
                             </th>
                             <th>
                                 Acción
-                            </th>
-                            <th>
-                                Malo
-                            </th>
-                            <th>
-                                Bueno
                             </th>
                         </thead>
                         <tbody>
                             <tr *ngFor="let entrada of entradasProveedor;let i = index">
                                 <td>
-                                    {{ entrada.proveedor.nombre }}
+                                    {{  entrada.proveedor.nombre}}
                                 </td>
                                 <td>
-                                    {{ entrada.kg }}
+                                    {{  entrada.fechaDeEntrada | date:short  }}
                                 </td>
                                 <td>
-                                    {{ entrada.producto.nombre }}
+                                    <h3>
+                                        <span class="badge badge-info" style="cursor: pointer;"
+                                        placement="right"
+                                        [ngbPopover]="popupProductos">{{ entrada.productos.length }}</span>
+                                    </h3> 
+                                    <ng-template #popupProductos>
+                                        <ng-container *ngFor="let producto of entrada.productos; let i = index">
+                                            
+                                            <h5>
+                                                <span class="badge badge-primary">{{producto.producto.nombre}}</span>
+                                                <span class="badge badge-info">{{producto.cantidad}}</span>
+                                            </h5>
+                                        </ng-container>
+                                    </ng-template>
                                 </td>
                                 <td>
-                                    {{ entrada.fechaEntrada | date:shortDate }}
+                                    <h5>
+                                        <span *ngIf="entrada.estado" class="badge badge-success"
+                                        placement="right"
+                                        [ngbPopover]="popupMerma">registrado</span>
+                                        <span *ngIf="!entrada.estado" class="badge badge-warning"
+                                        placement="right"
+                                        [ngbPopover]="popupMerma">pendiente</span>
+                                        <ng-template #popupMerma>
+                                            <ng-container *ngFor="let producto of entrada.productos; let i = index">
+                                                
+                                                <h5>
+                                                    <span class="badge badge-primary">{{producto.producto.nombre}}</span>
+                                                    <span *ngIf="producto.noIdoneo.length > 0; else pendiente" class="badge badge-success">Revisado</span>
+                                                    <ng-template #pendiente>
+                                                    <span class="badge badge-warning">Pendiente</span>
+                                                    </ng-template>
+                                                </h5>
+                                            </ng-container>
+                                        </ng-template>
+                                    </h5>
                                 </td>
-                                <th>
-                                    <button *ngIf="entrada.revisado" class="btn btn-success btn-sm" (click)="editarRevisarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-check-2"></i></button>
-                                    <button *ngIf="!entrada.revisado" class="btn btn-warning btn-sm" (click)="revisarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-layout-11"></i></button>
-                                </th>
                                 <td>
-                                    <button *ngIf="!entrada.revisado" class="btn btn-primary btn-sm" (click)="actualizarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-ruler-pencil"></i></button>
                                     <button class="btn btn-danger btn-sm" (click)="borrarEntradaProveedor(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
-                                </td>
-                                <td>
-                                    {{ entrada.malo}}
-                                </td>
-                                <td>
-                                    {{ entrada.bueno}}
                                 </td>
                             </tr>
                         </tbody>

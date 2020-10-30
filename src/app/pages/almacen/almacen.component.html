@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">Bodega</h5>
+            </div>
+            <div class="card-body">
+                <ngb-tabset>
+                    <ngb-tab title="Ordenes">
+                    <ng-template ngbTabContent>
+                        <app-ordenes></app-ordenes>
+                    </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Entradas">
+                    <ng-template ngbTabContent>
+                        <app-entrada-proveedor></app-entrada-proveedor>
+                    </ng-template>
+                    </ngb-tab>
+                    <ngb-tab title="Bodega">
+                    <ng-template ngbTabContent>
+                        <p>Bodega</p>
+                    </ng-template>
+                    </ngb-tab>
+                </ngb-tabset>
+            </div>
+        </div>
+    </div>
+</div>

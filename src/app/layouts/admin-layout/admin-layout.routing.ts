@@ -9,7 +9,6 @@ import { MapsComponent }                        from '../../pages/maps/maps.comp
 import { NotificationsComponent }               from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }                     from '../../pages/upgrade/upgrade.component';
 import { EntradasComponent }                    from '../../pages/entradas/entradas.component';
-import { FacturaProveedorComponent }            from '../../pages/entradas/factura-proveedor/factura-proveedor.component';
 import { FacturaCompraComponent }               from '../../pages/entradas/factura-compra/factura-compra.component';
 import { CajasComponent }                       from '../../pages/inventario/cajas/cajas.component';
 import { EmpleadosComponent }                   from '../../pages/recursos-humanos/empleados/empleados.component';
@@ -31,6 +30,7 @@ import { RevisarEntradaEditarComponent }        from '../../pages/entrada-provee
 import { OrdenesComponent }                     from '../../pages/ordenes/ordenes.component';
 import { CrearOrdenComponent }                  from '../../pages/ordenes/crear-orden/crear-orden.component';
 import { EditarOrdenComponent }                 from '../../pages/ordenes/editar-orden/editar-orden.component';
+import { AlmacenComponent }                       from '../../pages/almacen/almacen.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -43,9 +43,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'maps',                                 component: MapsComponent },
     { path: 'notifications',                        component: NotificationsComponent },
     { path: 'upgrade',                              component: UpgradeComponent },
+
     { path: 'entradas',                             component: EntradasComponent },
-    { path: 'facturarProveedor/:id',                component: FacturaProveedorComponent },
-    { path: 'facturarCompra/:id',                   component: FacturaCompraComponent },
+
     { path: 'cajas',                                component: CajasComponent },
     { path: 'empleados',                            component: EmpleadosComponent },
     { path: 'recursoshumanos',                      component: RecursosHumanosComponent },
@@ -54,7 +54,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'inventario/administrarEntradaCajas',   component: AdministrarEntradaCajasComponent },
     
     { path: 'entradaProveedor',                     component: EntradaProveedorComponent },
-    { path: 'crearEntradaProveedor',                component: AgregarEntradaProveedorComponent },
+    { path: 'crearEntradaProveedor/:id',                component: AgregarEntradaProveedorComponent },
     { path: 'actualizarEntradaProveedor/:id',       component: ActualizarEntradaProveedorComponent },
     { path: 'revisarEntradaProveedor/:id',          component: RevisarEntradaProveedorComponent },
     { path: 'editarRevisarEntradaProveedor/:id',    component: RevisarEntradaEditarComponent },
@@ -69,4 +69,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'ordenesdecompra',                      component: OrdenesComponent },
     { path: 'crearOrden',                           component: CrearOrdenComponent },
     { path: 'editarOrden/:id',                      component: EditarOrdenComponent },
+
+    { path: 'almacen',                              component: AlmacenComponent}
 ];  

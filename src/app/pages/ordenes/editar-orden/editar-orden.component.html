@@ -2,18 +2,19 @@
     <div class="col-md-8">
         <div class="card card-user">
             <div class="card-header">
-            <h5 class="card-title">Editar Orden</h5>
+            <h5 class="card-title">Crear Entrada</h5>
+            <h5>{{orden.ordenCompra}}</h5>
             </div>
             <div class="card-body">
             <form  autocomplete="off">
                 <div class="row">
                     <div class="col-md-3 pr-1">
                         <div class="form-group">
-                        <label>Nombre</label>
+                        <label>Proveedor</label>
                         <input type="text" class="form-control" 
                         [(ngModel)]="orden.proveedor" 
                         name="proveedor" 
-                        (keyup)="buscarProveedorInput($event)" 
+                        (keyup)="buscarProveedorInput($event)" (blur)="comprobarProveedor(orden.proveedor)" 
                         [attr.placeholder]="orden.proveedor"  
                         list="proveedor">
                             <datalist id="proveedor">
@@ -32,8 +33,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="row">
-                            <button type="button" (click)="crearOrden()" class="btn btn-success btn-sm"><i class="nc-icon nc-check-2"></i></button>
-                            <button type="button" (click)="agregarProducto()" class="btn btn-primary btn-sm"><i class="nc-icon nc-simple-add"></i></button>
+                            <button type="button" (click)="crearEntrada()" class="btn btn-success btn-sm">Listo <i class="nc-icon nc-check-2"></i></button>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,9 @@
                         <table class="table">
                             <thead class=" text-primary">
                                 <th>#</th>
-                                <th>producto</th>
+                                <th>
+                                    <button type="button" (click)="anadirFila()" class="btn btn-primary"><i class="nc-icon nc-simple-add"></i> producto</button>
+                                </th>
                                 <th>kg</th>
                                 <th>borrar</th>
                             </thead>
@@ -58,8 +60,8 @@
                                         (keyup)="buscarProductoInput($event)" (blur)="comprobarProducto(producto.nombre, i)"
                                         list="producto">
                                         <datalist id="producto">
-                                            <ng-container *ngFor="let prod of prods">
-                                                <option value="{{prod.nombre}}">{{prod.nombre}}</option>
+                                            <ng-container *ngFor="let producto of productos">
+                                                <option value="{{producto.nombre}}">{{producto.nombre}}</option>
                                             </ng-container>
                                         </datalist>
                                     </td>
@@ -72,7 +74,7 @@
                                         [attr.placeholder]="producto.kg">
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-sm"><i class="nc-icon nc-simple-remove"></i></button>
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarProducto(i)"><i class="nc-icon nc-simple-remove"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -83,4 +85,3 @@
             </div>
         </div>
     </div>
-

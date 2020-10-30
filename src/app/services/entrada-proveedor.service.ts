@@ -24,7 +24,7 @@ export class EntradaProveedorService {
   }
 
   postEntradaProveedor(entrada){
-    return this.http.post(base_url + '/entradaProveedor', entrada).toPromise();
+    return this.http.post(base_url + '/entradaProveedor', entrada);
   }
 
   deleteEntradaProveedor(id: string){

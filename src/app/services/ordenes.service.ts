@@ -17,7 +17,7 @@ export class OrdenesService {
     return this.http.get(base_url + '/ordenes' );
   }
 
-  getOrdene(id){
+  getOrden(id){
     return this.http.get(base_url + '/ordenes/' + id );
   }
 

@@ -204,11 +204,8 @@ export class FacturaCompraComponent implements OnInit {
                 )
               }
               );
-          
         } 
       })
-      
-      
     }else
     {
       Swal.fire({
@@ -234,11 +231,6 @@ export class FacturaCompraComponent implements OnInit {
       this.orden.purchases.items[i].status = false;
       this.guardarLocalStorage();
     }
-  }
-
-  agregar(producto,i: number){
-    this.orden.purchases.items.splice(i + 1,0,{id:producto.id, name: producto.name, reference: producto.reference, status: false});
-    console.log(this.orden.purchases.items);
   }
 
   eliminar(i: number){
