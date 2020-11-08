@@ -6,21 +6,25 @@
             </div>
             <div class="card-body">
                 <ngb-tabset>
-                    <ngb-tab title="Ordenes">
-                    <ng-template ngbTabContent>
-                        <app-ordenes></app-ordenes>
-                    </ng-template>
-                    </ngb-tab>
+                    
                     <ngb-tab title="Entradas">
-                    <ng-template ngbTabContent>
-                        <app-entrada-proveedor></app-entrada-proveedor>
-                    </ng-template>
+                        <ng-template ngbTabContent>
+                            <app-entrada-proveedor></app-entrada-proveedor>
+                        </ng-template>
                     </ngb-tab>
+
+                    <ngb-tab title="Ordenes">
+                        <ng-template ngbTabContent>
+                            <app-ordenes></app-ordenes>
+                        </ng-template>
+                    </ngb-tab>
+
                     <ngb-tab title="Bodega">
-                    <ng-template ngbTabContent>
-                        <p>Bodega</p>
-                    </ng-template>
+                        <ng-template ngbTabContent>
+                            <p>Bodega</p>
+                        </ng-template>
                     </ngb-tab>
+
                 </ngb-tabset>
             </div>
         </div>

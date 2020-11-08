@@ -28,9 +28,7 @@ export class OrdenesFechaComponent implements OnInit {
         this.fechas.push(a.fechas[i]);
       }
 
-      for(let i = 0; i < a.orden.length; i++){
-        a.orden[i].fechaDeEntrada = moment(a.orden[i].fechaDeEntrada).add(1, 'days').format('YYYY-MM-DD');
-      }
+
       this.productos = a.productos;
       this.tabla = new Array (this.productos.length);
 
@@ -56,7 +54,7 @@ export class OrdenesFechaComponent implements OnInit {
       {
         for(let i = 0; i < a.orden[o].productos.length; i++)
         {
-          let b = this.fechas.indexOf( a.orden[o].fechaDeEntrada );
+          let b = this.fechas.indexOf(moment(a.orden[o].fechaDeEntrada).format('YYYY-MM-DD'));
           let e = a.orden[o].productos[i].producto._id;
           let c = this.productos.findIndex(i => i.id === e);
 

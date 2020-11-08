@@ -18,13 +18,6 @@ export class CrearOrdenComponent implements OnInit {
     fecha: moment().format('YYYY-MM-DD')
   };
 
-
-  public enviar = {
-    proveedor: '',
-    productos: new Array(),
-    fechaDeEntrada: '',
-  };
-
   public pasa = true;
 
   public typingTimer;                //timer identifier
@@ -71,6 +64,12 @@ export class CrearOrdenComponent implements OnInit {
 
   async crearEntrada()
   {
+    let enviar = {
+      proveedor: '',
+      productos: new Array(),
+      fechaDeEntrada: '',
+    };
+
     if(this.orden.proveedor == ''){
       return Swal.fire(
         'Atención',
@@ -82,7 +81,7 @@ export class CrearOrdenComponent implements OnInit {
     //Si se ingreso un proveedor, se comprueba si dicho proveedor existe en la base de datos
     await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
       (res:any) => {
-        this.enviar.proveedor = res.contacto.uid;
+        enviar.proveedor = res.contacto.uid;
     }).catch(
       (err: any) => {
         //si no se encontro al proveedor en la base de datos se termina el proceso
@@ -120,22 +119,19 @@ export class CrearOrdenComponent implements OnInit {
 
     for(let o = 0; o < i; o++)
     {
-      
       //Si hay asignada una cantidad y un producto, se verifica la existencia del producto  
       await this.ServicioProducto.buscarProductoEstricto(this.orden.productos[o].nombre).then(
         (res:any) => {
           //Si el producto existe, se agrega al array, para preparase para su envio a la peticion a la base de datos
-          this.enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
+          enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
       }).catch(
         (err: any) => { 
           return this.devolverError(err.error.msg);
       });
-    
     }
 
-    this.enviar.fechaDeEntrada = this.orden.fecha;
-    console.log(this.enviar);
-    this.ServicioOrden.postOrden(this.enviar).subscribe(
+    enviar.fechaDeEntrada = this.orden.fecha;
+    this.ServicioOrden.postOrden(enviar).subscribe(
       data => {
         console.log(data);
         Swal.fire(
@@ -144,6 +140,8 @@ export class CrearOrdenComponent implements OnInit {
           'success');
       },
       err => console.log(err));
+
+    console.log(enviar);
   }
 
   errorProveedor(){
@@ -300,7 +298,7 @@ export class CrearOrdenComponent implements OnInit {
     }
     await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
       (res:any) => {
-        this.enviar.proveedor = res.contacto.uid;
+
     }).catch(
       (err: any) => {  
         this.pasa = false;

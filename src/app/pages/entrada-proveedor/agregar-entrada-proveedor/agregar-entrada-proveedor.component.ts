@@ -6,7 +6,7 @@ import { ContactosService } from 'app/services/contactos.service';
 import { ProductosService } from 'app/services/productos.service';
 import * as moment from 'moment';
 import { OrdenesService } from 'app/services/ordenes.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-agregar-entrada-proveedor',
@@ -35,29 +35,33 @@ export class AgregarEntradaProveedorComponent implements OnInit {
 
   public proveedores;
   public productos;
+  public idOrden;
+  public ordenExiste: boolean = false;
 
   constructor(
     private ServicioOrden: OrdenesService,
     public ServicioEntradasProveedor: EntradaProveedorService,
     private ServicioProveedor: ContactosService,
     private ServicioProducto: ProductosService,
+    private router: Router, 
     private rutaActiva: ActivatedRoute) {
     
-      
       if(this.rutaActiva.snapshot.params.id != 'nuevaEntrada'){
         this.ServicioOrden.getOrden(this.rutaActiva.snapshot.params.id).subscribe((a:any) => {
-
-          this.orden.ordenCompra = a.orden.ordenCompra
+          this.idOrden = this.rutaActiva.snapshot.params.id;
+          this.ordenExiste = true;
+          this.orden.ordenCompra = a.orden.ordenCompra;
           this.orden.proveedor = a.orden.proveedor.nombre;
           
           for(let i = 0; i < a.orden.productos.length; i++){
-            console.log(a.orden.productos[i]);
             this.orden.productos.push({nombre: a.orden.productos[i].producto.nombre, kg: a.orden.productos[i].cantidad})
           }
 
-        });
+        },
+        err => console.log(err)
+        );
       }else{
-        console.log(this.rutaActiva.snapshot.params.id);
+        console.log(this.idOrden);
       }
   }
 
@@ -155,16 +159,25 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     }
 
     this.enviar.fechaDeEntrada = this.orden.fecha;
-    console.log(this.enviar);
-    this.ServicioEntradasProveedor.postEntradaProveedor(this.enviar).subscribe(
-      data => {
-        console.log(data);
-        Swal.fire(
-          'Exito',
-          'Entrada creada correctamente',
-          'success');
+
+    
+    await this.ServicioEntradasProveedor.postEntradaProveedor(this.enviar).subscribe(
+    data => {
+      console.log(data);
+      Swal.fire(
+        'Exito',
+        'Entrada creada correctamente',
+        'success');
       },
-      err => console.log(err));
+      err => {
+        console.log(err)
+      });
+
+    if(this.ordenExiste){
+      await this.ServicioOrden.registrarOrden(this.idOrden).subscribe();
+      await this.ServicioOrden.editarOrden(this.idOrden, this.enviar).subscribe();
+      return this.router.navigate(['almacen']); 
+    }
   }
 
   errorProveedor(){

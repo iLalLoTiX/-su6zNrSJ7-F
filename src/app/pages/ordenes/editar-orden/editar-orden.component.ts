@@ -50,11 +50,11 @@ export class EditarOrdenComponent implements OnInit {
                   this.id = this.rutaActiva.snapshot.params.id
                   this.servicioOrdenes.getOrden(this.id).subscribe((a:any) => {
           
-                    this.orden.ordenCompra = a.orden.ordenCompra
+                    this.orden.ordenCompra = a.orden.ordenCompra;
                     this.orden.proveedor = a.orden.proveedor.nombre;
+                    this.orden.fecha = moment(a.orden.fechaDeEntrada).format('YYYY-MM-DD');
                     
                     for(let i = 0; i < a.orden.productos.length; i++){
-                      console.log(a.orden.productos[i]);
                       this.orden.productos.push({nombre: a.orden.productos[i].producto.nombre, kg: a.orden.productos[i].cantidad})
                     }
           
@@ -158,17 +158,17 @@ export class EditarOrdenComponent implements OnInit {
               }
           
               this.enviar.fechaDeEntrada = this.orden.fecha;
+              this.enviar.ordenCompra = this.orden.ordenCompra;
               console.log(this.enviar);
               
               this.servicioOrdenes.editarOrden(this.id, this.enviar).subscribe(
                 data => {
-                  console.log(data);
                   Swal.fire(
                     'Exito',
                     'Orden actualizada correctamente',
                     'success');
                 },
-                err => console.log(err));
+                err => {this.devolverError(err)});
             }
           
             errorProveedor(){

@@ -35,7 +35,7 @@ import { AgregarContactoComponent }               from '../../pages/contacto/agr
 import { ActualizarContactoComponent }            from '../../pages/contacto/actualizar-contacto/actualizar-contacto.component';
 import { AgregarEntradaProveedorComponent }       from '../../pages/entrada-proveedor/agregar-entrada-proveedor/agregar-entrada-proveedor.component';
 import { ActualizarEntradaProveedorComponent }    from '../../pages/entrada-proveedor/actualizar-entrada-proveedor/actualizar-entrada-proveedor.component';
-import { ModalFiltrarEntradaProveedorComponent }  from '../../pages/entrada-proveedor/modal-filtrar-entrada-proveedor/modal-filtrar-entrada-proveedor.component';
+import { ModalMermar }  from '../../pages/entrada-proveedor/modal-mermar/modal-mermar.component.';
 import { RevisarEntradaProveedorComponent }       from '../../pages/entrada-proveedor/revisar-entrada-proveedor/revisar-entrada-proveedor.component';
 import { RevisarEntradaEditarComponent }          from '../../pages/entrada-proveedor/revisar-entrada-editar/revisar-entrada-editar.component';
 import { OrdenesComponent }                       from '../../pages/ordenes/ordenes.component';
@@ -85,7 +85,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProductosComponent,
     ProductoComponent,
     AddProductoComponent,
-    ModalFiltrarEntradaProveedorComponent,
+    ModalMermar,
     RevisarEntradaProveedorComponent,
     RevisarEntradaEditarComponent,
     OrdenesComponent,

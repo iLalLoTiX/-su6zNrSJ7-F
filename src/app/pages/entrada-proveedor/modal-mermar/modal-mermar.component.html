@@ -1,0 +1,51 @@
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title"></h4>
+        <button type="button" class="close" aria-label="Close" (click)="salir()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table class="table">
+                <thead>
+                    <tr>
+                        <th>sección</th>
+                        <th>cantidad</th>
+                        <th><button class="btn btn-sm btn-primary" (click)="anadirFila()" type="button">agregar</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let merma of mermas; let i = index">
+                        <td>{{i+1}}</td>
+                        <td>
+                            <input type="text" class="form-control"  
+                            [(ngModel)]="merma.destino" 
+                            [name]="merma.destino" 
+                            [ngModelOptions]="{standalone: true}"
+                            [attr.placeholder]="merma.destino" 
+                            (keyup)="buscar($event)" (blur)="comprobarDestino(merma.destino, i)"
+                            list="destinos">
+                            <datalist id="destinos">
+                                <ng-container *ngFor="let destino of destinos">
+                                    <option value="{{destino.destino}}">{{destino.destino}}</option>
+                                </ng-container>
+                            </datalist>
+                        </td>
+                        <td>
+                            <input type="number"
+                            class="form-control"  
+                            [(ngModel)]="merma.cantidad"
+                            [name]="merma.cantidad" 
+                            [ngModelOptions]="{standalone: true}"
+                            [attr.placeholder]="merma.cantidad">
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="eliminarProducto(i)"><i class="nc-icon nc-simple-remove"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+          </table>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-outline-dark" (click)="enviar()">Save</button>
+      </div>

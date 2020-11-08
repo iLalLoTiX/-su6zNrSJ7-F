@@ -5,6 +5,7 @@ import { EntradaProveedorService } from 'app/services/entrada-proveedor.service'
 import { ContactosService } from 'app/services/contactos.service';
 import { ProductosService } from 'app/services/productos.service';
 import Swal from 'sweetalert2';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-entrada-proveedor',
@@ -51,17 +52,23 @@ export class EntradaProveedorComponent implements OnInit {
     fechaDos: '',
   }
 
+  public merma;
 
-  
   constructor(
     private ServicioEntradasProveedor: EntradaProveedorService, 
     private router: Router, 
     private ServicioProveedor: ContactosService, 
-    private ServicioProducto: ProductosService) {
+    private ServicioProducto: ProductosService,
+    private modalService: NgbModal) {
       this.ServicioEntradasProveedor.getEntradasProveedor().then((a:any) => {
         this.entradasProveedor = a.entrada;
         console.log(a);
-      }).catch((a:any)=> {console.log(a);});
+      }).catch((a:any) => {console.log(a);});
+  }
+
+  open(content, producto) {
+    this.merma = producto.noIdoneo;
+    this.modalService.open(content);
   }
 
   refrescarEntradaProveedor(){
@@ -281,4 +288,5 @@ export class EntradaProveedorComponent implements OnInit {
       error,
       'warning');
   }
+
 }

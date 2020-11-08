@@ -22,11 +22,13 @@ export class OrdenesTablaComponent implements OnInit {
     this.servicioOrdenes.getOrdenes().subscribe((a: any) => {
       
       this.tabla = a.orden;
-      
-      for(let i = 0; i < a.orden.length; i++){
-        a.orden[i].fechaDeEntrada = moment(a.orden[i].fechaDeEntrada).add(1, 'days').format('YYYY-MM-DD');
-      }
+    
     });
+  }
+
+  momento(fecha){
+    let a = moment(fecha).format('YYYY-MM-DD');
+    return a;
   }
 
   editarOrden(id){

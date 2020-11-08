@@ -1,80 +1,80 @@
 <div class="col-md-12">
-  <div class="card">
-      <div class="card-header">
-          <h5 class="card-title">Filtrar Entradas</h5>
-          
-        <!-- <div class="col-md-4">
-            <div class="card ">
-            <div class="card-header ">
-                <h5 class="card-title">Merma Estadisticas</h5>
-                <p class="card-category">Bueno: {{porcentajeBueno | percent}} | Malo: {{porcentajeMalo| percent}}</p>
-            </div>
-            <div class="card-body ">
-                <canvas id="chartEmail"></canvas>
-            </div>
-            <div class="card-footer ">
-                <div class="legend">
-                <i class="fa fa-circle text-primary"></i> Bueno
-                <i class="fa fa-circle text-danger"></i> Malo
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Filtrar Entradas</h5>
+            
+            <!-- <div class="col-md-4">
+                <div class="card ">
+                <div class="card-header ">
+                    <h5 class="card-title">Merma Estadisticas</h5>
+                    <p class="card-category">Bueno: {{porcentajeBueno | percent}} | Malo: {{porcentajeMalo| percent}}</p>
                 </div>
-            </div>
-            </div>
-        </div> -->
-        <div class="row">
-            <div class="col-md-1 px-1">
-                <label>Registros</label>
-                <select  class="form-control" [(ngModel)]="limite" (change)="filtrar()">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                </select>
-            </div>
-            <div class="col-md-2 pr-1">
-                <div class="form-group">
-                    <label>Proveedor</label>
-                    <input type="text" class="form-control" autocomplete="off" (change)="buscarContactoEstricto()" [(ngModel)]="filtro.proveedor" (keyup)="buscarProveedorInput($event)" name="proveedor" type="text" list="proveedor" />
-                    <datalist id="proveedor">
-                        <ng-container *ngFor="let proveedor of proveedores">
-                            <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
-                        </ng-container>
-                    </datalist>
+                <div class="card-body ">
+                    <canvas id="chartEmail"></canvas>
                 </div>
-            </div>
-            <div class="col-md-2 pr-1">
-                <div class="form-group">
-                    <label>Producto</label>
-                    <input type="text" class="form-control" autocomplete="off" (change)="buscarProductoEstricto()" [(ngModel)]="filtro.producto" (keyup)="buscarProductoInput($event)" name="producto" type="text" list="producto" />
-                    <datalist id="producto">
-                        <ng-container *ngFor="let producto of productos">
-                            <option value="{{producto.nombre}}">{{producto.nombre}}</option>
-                        </ng-container>
-                    </datalist>
+                <div class="card-footer ">
+                    <div class="legend">
+                    <i class="fa fa-circle text-primary"></i> Bueno
+                    <i class="fa fa-circle text-danger"></i> Malo
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-2 pr-1">
-                <div class="form-group">
-                    <label>Inicio</label>
-                    <input class="form-control" type="date" [(ngModel)]="filtro.fechaUno" name="inicio">
                 </div>
-            </div>
-            <div class="col-md-2 pr-1">
-                <div class="form-group">
-                    <label>Fin</label>
-                    <input class="form-control" type="date" [(ngModel)]="filtro.fechaDos" name="fin">
+            </div> -->
+            <div class="row">
+                <div class="col-md-1 px-1">
+                    <label>Registros</label>
+                    <select  class="form-control" [(ngModel)]="limite" (change)="filtrar()">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="15">15</option>
+                    </select>
                 </div>
-            </div>
-            <div class="col-md-1 pr-1">
-            <button type="button" class="btn btn-warning btn-sm" (click)="filtrar()"><i class="nc-icon nc-zoom-split"></i></button>
-            <button type="button" class="btn btn-primary btn-sm" (click)="refrescarEntradaProveedor()"><i class="nc-icon nc-refresh-69"></i> </button>
-            <button type="button" class="btn btn-success btn-sm" (click)="crearEntradaProveedor()"><i class="nc-icon nc-simple-add"></i></button>
+                <div class="col-md-2 pr-1">
+                    <div class="form-group">
+                        <label>Proveedor</label>
+                        <input type="text" class="form-control" autocomplete="off" (change)="buscarContactoEstricto()" [(ngModel)]="filtro.proveedor" (keyup)="buscarProveedorInput($event)" name="proveedor" type="text" list="proveedor" />
+                        <datalist id="proveedor">
+                            <ng-container *ngFor="let proveedor of proveedores">
+                                <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
+                            </ng-container>
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col-md-2 pr-1">
+                    <div class="form-group">
+                        <label>Producto</label>
+                        <input type="text" class="form-control" autocomplete="off" (change)="buscarProductoEstricto()" [(ngModel)]="filtro.producto" (keyup)="buscarProductoInput($event)" name="producto" type="text" list="producto" />
+                        <datalist id="producto">
+                            <ng-container *ngFor="let producto of productos">
+                                <option value="{{producto.nombre}}">{{producto.nombre}}</option>
+                            </ng-container>
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col-md-2 pr-1">
+                    <div class="form-group">
+                        <label>Inicio</label>
+                        <input class="form-control" type="date" [(ngModel)]="filtro.fechaUno" name="inicio">
+                    </div>
+                </div>
+                <div class="col-md-2 pr-1">
+                    <div class="form-group">
+                        <label>Fin</label>
+                        <input class="form-control" type="date" [(ngModel)]="filtro.fechaDos" name="fin">
+                    </div>
+                </div>
+                <div class="col-md-1 pr-1">
+                <button type="button" class="btn btn-warning btn-sm" (click)="filtrar()"><i class="nc-icon nc-zoom-split"></i></button>
+                <button type="button" class="btn btn-primary btn-sm" (click)="refrescarEntradaProveedor()"><i class="nc-icon nc-refresh-69"></i> </button>
+                <button type="button" class="btn btn-success btn-sm" (click)="crearEntradaProveedor()"><i class="nc-icon nc-simple-add"></i></button>
+                </div>
             </div>
         </div>
-      </div>
-        <ng-container>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead class=" text-primary" >
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <thead class=" text-primary">
+                        <tr>
                             <th>
                                 Proveedor
                             </th>
@@ -90,71 +90,68 @@
                             <th>
                                 Acción
                             </th>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let entrada of entradasProveedor;let i = index">
-                                <td>
-                                    {{  entrada.proveedor.nombre}}
-                                </td>
-                                <td>
-                                    {{  entrada.fechaDeEntrada | date:short  }}
-                                </td>
-                                <td>
-                                    <h3>
-                                        <span class="badge badge-info" style="cursor: pointer;"
-                                        placement="right"
-                                        [ngbPopover]="popupProductos">{{ entrada.productos.length }}</span>
-                                    </h3> 
-                                    <ng-template #popupProductos>
-                                        <ng-container *ngFor="let producto of entrada.productos; let i = index">
-                                            
-                                            <h5>
-                                                <span class="badge badge-primary">{{producto.producto.nombre}}</span>
-                                                <span class="badge badge-info">{{producto.cantidad}}</span>
-                                            </h5>
-                                        </ng-container>
-                                    </ng-template>
-                                </td>
-                                <td>
-                                    <h5>
-                                        <span *ngIf="entrada.estado" class="badge badge-success"
-                                        placement="right"
-                                        [ngbPopover]="popupMerma">registrado</span>
-                                        <span *ngIf="!entrada.estado" class="badge badge-warning"
-                                        placement="right"
-                                        [ngbPopover]="popupMerma">pendiente</span>
-                                        <ng-template #popupMerma>
-                                            <ng-container *ngFor="let producto of entrada.productos; let i = index">
-                                                
-                                                <h5>
-                                                    <span class="badge badge-primary">{{producto.producto.nombre}}</span>
-                                                    <span *ngIf="producto.noIdoneo.length > 0; else pendiente" class="badge badge-success">Revisado</span>
-                                                    <ng-template #pendiente>
-                                                    <span class="badge badge-warning">Pendiente</span>
-                                                    </ng-template>
-                                                </h5>
-                                            </ng-container>
-                                        </ng-template>
-                                    </h5>
-                                </td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" (click)="borrarEntradaProveedor(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let entrada of entradasProveedor;let i = index">
+                            <td>
+                                {{  entrada.proveedor.nombre}}
+                            </td>
+                            <td>
+                                {{  entrada.fechaDeEntrada | date:short  }}
+                            </td>
+                            <td>
+                                <span class="badge badge-info" style="cursor: pointer;"
+                                placement="right"
+                                [ngbPopover]="popupProductos">{{ entrada.productos.length }}</span>
+                                <ng-template #popupProductos>
+                                    <ng-container *ngFor="let producto of entrada.productos; let i = index">
+                                            <span class="badge badge-primary">{{producto.producto.nombre}}</span>
+                                            <span class="badge badge-info">{{producto.cantidad}}</span>
+                                    </ng-container>
+                                </ng-template>
+                            </td>
+                            <td>
+                                <span *ngIf="entrada.estado" class="badge badge-success"
+                                placement="right"
+                                [ngbPopover]="popupMerma">registrado</span>
+                                <span *ngIf="!entrada.estado" class="badge badge-warning"
+                                placement="right"
+                                [ngbPopover]="popupMerma">pendiente</span>
+                                <ng-template #popupMerma>
+                                    <ng-container *ngFor="let producto of entrada.productos; let i = index">
+                                        
+                                            <span class="badge badge-primary">{{producto.producto.nombre}}</span>
+                                            <span *ngIf="producto.noIdoneo.length > 0; else pendiente" (click)="open(content, producto)" class="badge badge-success">Revisado</span>
+                                            <ng-template #pendiente>
+                                                <span class="badge badge-warning" (click)="open(content, producto)">mermar</span>
+                                            </ng-template>
+                                            <hr>
+                                    </ng-container>
+                                </ng-template>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" (click)="borrarEntradaProveedor(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="row ">
+                <div class="col-md-1">
+                    <button class="btn btn-primary btn-sm" (click)="cambiarPagina(-5)"><i class="nc-icon nc-minimal-left"></i></button>
+                </div>
+                <div class="col-md-1 px-1">
+                    <button class="btn btn-primary btn-sm" (click)="cambiarPagina(5)"><i class="nc-icon nc-minimal-right"></i></button>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="row ">
-                    <div class="col-md-1">
-                        <button class="btn btn-primary btn-sm" (click)="cambiarPagina(-5)"><i class="nc-icon nc-minimal-left"></i></button>
-                    </div>
-                    <div class="col-md-1 px-1">
-                        <button class="btn btn-primary btn-sm" (click)="cambiarPagina(5)"><i class="nc-icon nc-minimal-right"></i></button>
-                    </div>
-                </div>
-            </div>
-        </ng-container>
-  </div>
+        </div>
+
+    
+<ng-template #content let-modal>
+    <app-modal-mermar [closeModal]="modalService" [merma]="merma"></app-modal-mermar>
+  </ng-template>
+    </div>
 </div>
