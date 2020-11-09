@@ -91,4 +91,8 @@ export class OrdenesFechaComponent implements OnInit {
     
   }
 
+  desmarcar(){
+    this.servicioOrdenes.desmarcarOrden(this.orden).subscribe(console.log);
+  }
+
 }

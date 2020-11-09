@@ -35,16 +35,14 @@ import { AgregarContactoComponent }               from '../../pages/contacto/agr
 import { ActualizarContactoComponent }            from '../../pages/contacto/actualizar-contacto/actualizar-contacto.component';
 import { AgregarEntradaProveedorComponent }       from '../../pages/entrada-proveedor/agregar-entrada-proveedor/agregar-entrada-proveedor.component';
 import { ActualizarEntradaProveedorComponent }    from '../../pages/entrada-proveedor/actualizar-entrada-proveedor/actualizar-entrada-proveedor.component';
-import { ModalMermar }  from '../../pages/entrada-proveedor/modal-mermar/modal-mermar.component.';
-import { RevisarEntradaProveedorComponent }       from '../../pages/entrada-proveedor/revisar-entrada-proveedor/revisar-entrada-proveedor.component';
-import { RevisarEntradaEditarComponent }          from '../../pages/entrada-proveedor/revisar-entrada-editar/revisar-entrada-editar.component';
+import { ModalMermar }                            from '../../pages/entrada-proveedor/modal-mermar/modal-mermar.component.';
 import { OrdenesComponent }                       from '../../pages/ordenes/ordenes.component';
 import { OrdenesFechaComponent }                  from '../../pages/ordenes/ordenes-fecha/ordenes-fecha.component';
 import { OrdenesTablaComponent }                  from '../../pages/ordenes/ordenes-tabla/ordenes-tabla.component';
 import { CrearOrdenComponent }                    from '../../pages/ordenes/crear-orden/crear-orden.component';
 import { EditarOrdenComponent }                   from '../../pages/ordenes/editar-orden/editar-orden.component';
 import { AlmacenComponent }                       from '../../pages/almacen/almacen.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule }                              from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -86,8 +84,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProductoComponent,
     AddProductoComponent,
     ModalMermar,
-    RevisarEntradaProveedorComponent,
-    RevisarEntradaEditarComponent,
     OrdenesComponent,
     CrearOrdenComponent,
     EditarOrdenComponent,

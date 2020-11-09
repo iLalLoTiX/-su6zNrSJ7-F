@@ -22,8 +22,6 @@ export class EntradaProveedorComponent implements OnInit {
   public entradasProveedor;
   public desde: number = 0;
   public limite: number = 0;
-  public bueno: number;
-  public malo: number;
   public params;
   
   public typingTimer;                //timer identifier
@@ -35,8 +33,6 @@ export class EntradaProveedorComponent implements OnInit {
 
   public porcentajeBueno;
   public porcentajeMalo;
-  
-  public pasa = true;
 
   public filtro = {
     proveedor: '',
@@ -53,6 +49,7 @@ export class EntradaProveedorComponent implements OnInit {
   }
 
   public merma;
+  public dataEntrada;
 
   constructor(
     private ServicioEntradasProveedor: EntradaProveedorService, 
@@ -66,7 +63,9 @@ export class EntradaProveedorComponent implements OnInit {
       }).catch((a:any) => {console.log(a);});
   }
 
-  open(content, producto) {
+  open(content, id, producto, i) {
+    console.log(id);
+    this.dataEntrada = {id: id, index: i};
     this.merma = producto.noIdoneo;
     this.modalService.open(content);
   }
@@ -193,7 +192,7 @@ export class EntradaProveedorComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.ServicioEntradasProveedor.deleteEntradaProveedor(id).then(a=>{
+        this.ServicioEntradasProveedor.desmarcarEntradaProveedor(id).subscribe(a=>{
           
           this.entradasProveedor.splice(i,1);
           return Swal.fire(
@@ -201,7 +200,7 @@ export class EntradaProveedorComponent implements OnInit {
             'El contacto ha sido borrado',
             'success'
           );
-        }).catch(a=>{
+        }, b => {
           return Swal.fire(
             'Error',
             'Hubo un error ponganse en contacto con el maestro del calabozo',

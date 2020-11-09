@@ -46,6 +46,10 @@ export class OrdenesTablaComponent implements OnInit {
     this.router.navigate(['crearEntradaProveedor/' + id]);
   }
 
+  desmarcar(id){
+    this.servicioOrdenes.desmarcarOrden(id).subscribe(console.log);
+  }
+
   ngOnInit(): void {
     
   }

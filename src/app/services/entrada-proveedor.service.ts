@@ -28,19 +28,20 @@ export class EntradaProveedorService {
   }
 
   deleteEntradaProveedor(id: string){
-    return this.http.delete(base_url + '/entradaProveedor/' + id).toPromise();
+    return this.http.delete(base_url + '/entradaProveedor/borrarEntrada/' + id);
+  }
+  
+  desmarcarEntradaProveedor(id: string){
+    return this.http.delete(base_url + '/entradaProveedor/borrarDesmarcarEntrada/' + id);
   }
 
   actualizarEntradaProveedor(id: string, entrada){
-    return this.http.put(base_url + '/entradaProveedor/' + id, entrada).toPromise();
+    return this.http.put(base_url + '/entradaProveedor/editar/' + id, entrada);
   }
 
-  revisarEntradaProveedor(id: string, entrada){
-    return this.http.put(base_url + '/entradaProveedor/revisar/' + id, entrada);
-  }
-
-  desmarcarEntradaProveedor(id: string, entrada){
-    return this.http.put(base_url + '/entradaProveedor/desmarcarEntradaProveedor/' + id, entrada);
+  mermarEntradaProveedor(dataEntrada: any, mermas){
+    console.log(dataEntrada.id, mermas);
+    return this.http.put(base_url + '/entradaProveedor/mermar/' + dataEntrada.id, {mermas, index: dataEntrada.index});
   }
   
   filtrarEntradaProveedor(filtro, desde: number, limite: number){

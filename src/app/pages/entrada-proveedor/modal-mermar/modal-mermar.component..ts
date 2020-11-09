@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DestinosMermaService } from 'app/services/destinos-merma.service';
+import { EntradaProveedorService } from 'app/services/entrada-proveedor.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -12,6 +13,7 @@ export class ModalMermar implements OnInit {
 
   @Input() public closeModal;
   @Input() public merma;
+  @Input() public dataEntrada;
   
   public formEntrada;
   
@@ -25,10 +27,14 @@ export class ModalMermar implements OnInit {
 
   public destinos = new Array();
   
-  constructor(private router: Router, private ServicioMermar: DestinosMermaService) {
+  constructor(
+    private router: Router, 
+    private ServicioMermar: DestinosMermaService,
+    private ServicioEntradaMerma: EntradaProveedorService,) {
   }
 
   ngOnInit(): void {
+    console.log(this.dataEntrada);
     console.log(this.merma.length);
     if(this.merma.length > 0){
       
@@ -39,11 +45,8 @@ export class ModalMermar implements OnInit {
           cantidad: this.merma[i].cantidad,
           id: this.merma[i].destino._id
         })
-      }
-      
+      } 
     }
-    console.log(this.merma);
-    console.log(this.mermas);
   }
 
   salir(){
@@ -147,7 +150,7 @@ export class ModalMermar implements OnInit {
     });
   }
 
-  enviar(){
-    console.log(this.mermas);
+  mermar(){
+    this.ServicioEntradaMerma.mermarEntradaProveedor(this.dataEntrada, this.mermas).subscribe(console.log);
   }
 }

@@ -25,8 +25,6 @@ import { AgregarContactoComponent }             from '../../pages/contacto/agreg
 import { ActualizarContactoComponent }          from '../../pages/contacto/actualizar-contacto/actualizar-contacto.component';
 import { AgregarEntradaProveedorComponent }     from '../../pages/entrada-proveedor/agregar-entrada-proveedor/agregar-entrada-proveedor.component';
 import { ActualizarEntradaProveedorComponent }  from '../../pages/entrada-proveedor/actualizar-entrada-proveedor/actualizar-entrada-proveedor.component';
-import { RevisarEntradaProveedorComponent }     from '../../pages/entrada-proveedor/revisar-entrada-proveedor/revisar-entrada-proveedor.component';
-import { RevisarEntradaEditarComponent }        from '../../pages/entrada-proveedor/revisar-entrada-editar/revisar-entrada-editar.component';
 import { OrdenesComponent }                     from '../../pages/ordenes/ordenes.component';
 import { CrearOrdenComponent }                  from '../../pages/ordenes/crear-orden/crear-orden.component';
 import { EditarOrdenComponent }                 from '../../pages/ordenes/editar-orden/editar-orden.component';
@@ -56,8 +54,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'entradaProveedor',                     component: EntradaProveedorComponent },
     { path: 'crearEntradaProveedor/:id',                component: AgregarEntradaProveedorComponent },
     { path: 'actualizarEntradaProveedor/:id',       component: ActualizarEntradaProveedorComponent },
-    { path: 'revisarEntradaProveedor/:id',          component: RevisarEntradaProveedorComponent },
-    { path: 'editarRevisarEntradaProveedor/:id',    component: RevisarEntradaEditarComponent },
 
     { path: 'contacto',                             component: ContactoComponent },
     { path: 'productos',                            component: ProductosComponent },

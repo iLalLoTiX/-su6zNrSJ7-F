@@ -120,18 +120,18 @@
                                 [ngbPopover]="popupMerma">pendiente</span>
                                 <ng-template #popupMerma>
                                     <ng-container *ngFor="let producto of entrada.productos; let i = index">
-                                        
-                                            <span class="badge badge-primary">{{producto.producto.nombre}}</span>
-                                            <span *ngIf="producto.noIdoneo.length > 0; else pendiente" (click)="open(content, producto)" class="badge badge-success">Revisado</span>
+                                        <span class="badge badge-primary">{{producto.producto.nombre}}</span>
+                                        <span *ngIf="producto.noIdoneo.length > 0; else pendiente" (click)="open(content, producto)" class="badge badge-success">Revisado</span>
                                             <ng-template #pendiente>
-                                                <span class="badge badge-warning" (click)="open(content, producto)">mermar</span>
+                                                <span class="badge badge-warning" (click)="open(content, entrada.uid, producto, i)">mermar</span>
                                             </ng-template>
-                                            <hr>
+                                        <hr>
                                     </ng-container>
                                 </ng-template>
                             </td>
                             <td>
                                 <button class="btn btn-danger btn-sm" (click)="borrarEntradaProveedor(entrada.uid, i)"><i class="nc-icon nc-simple-remove"></i></button>
+                                <button class="btn btn-primary btn-sm" (click)="actualizarEntradaProveedor(entrada.uid)"><i class="nc-icon nc-minimal-up"></i></button>
                             </td>
                         </tr>
                     </tbody>
@@ -151,7 +151,7 @@
 
     
 <ng-template #content let-modal>
-    <app-modal-mermar [closeModal]="modalService" [merma]="merma"></app-modal-mermar>
+    <app-modal-mermar [closeModal]="modalService" [dataEntrada]="dataEntrada" [merma]="merma"></app-modal-mermar>
   </ng-template>
     </div>
 </div>

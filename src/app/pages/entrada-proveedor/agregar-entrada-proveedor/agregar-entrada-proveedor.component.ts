@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { EntradaProveedorService } from 'app/services/entrada-proveedor.service';
 import { ContactosService } from 'app/services/contactos.service';
@@ -20,14 +19,6 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     proveedor: '',
     productos: new Array(),
     fecha: moment().format('YYYY-MM-DD')
-  };
-
-
-  public enviar = {
-    ordenCompra: '',
-    proveedor: '',
-    productos: new Array(),
-    fechaDeEntrada: '',
   };
 
   public typingTimer;                //timer identifier
@@ -96,6 +87,13 @@ export class AgregarEntradaProveedorComponent implements OnInit {
 
   async crearEntrada()
   {
+    let enviar = {
+      proveedor: '',
+      productos: new Array(),
+      fechaDeEntrada: '',
+      ordenCompra: ''
+    };
+
     if(this.orden.proveedor == ''){
       return Swal.fire(
         'Atención',
@@ -107,7 +105,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     //Si se ingreso un proveedor, se comprueba si dicho proveedor existe en la base de datos
     await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
       (res:any) => {
-        this.enviar.proveedor = res.contacto.uid;
+        enviar.proveedor = res.contacto.uid;
     }).catch(
       (err: any) => {
         //si no se encontro al proveedor en la base de datos se termina el proceso
@@ -145,23 +143,21 @@ export class AgregarEntradaProveedorComponent implements OnInit {
 
     for(let o = 0; o < i; o++)
     {
-      
       //Si hay asignada una cantidad y un producto, se verifica la existencia del producto  
       await this.ServicioProducto.buscarProductoEstricto(this.orden.productos[o].nombre).then(
         (res:any) => {
           //Si el producto existe, se agrega al array, para preparase para su envio a la peticion a la base de datos
-          this.enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
+          enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
       }).catch(
         (err: any) => { 
           return this.devolverError(err.error.msg);
       });
-    
     }
 
-    this.enviar.fechaDeEntrada = this.orden.fecha;
-
+    enviar.fechaDeEntrada = this.orden.fecha;
+    enviar.ordenCompra = this.orden.ordenCompra;
     
-    await this.ServicioEntradasProveedor.postEntradaProveedor(this.enviar).subscribe(
+    await this.ServicioEntradasProveedor.postEntradaProveedor(enviar).subscribe(
     data => {
       console.log(data);
       Swal.fire(
@@ -175,7 +171,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
 
     if(this.ordenExiste){
       await this.ServicioOrden.registrarOrden(this.idOrden).subscribe();
-      await this.ServicioOrden.editarOrden(this.idOrden, this.enviar).subscribe();
+      await this.ServicioOrden.editarOrden(this.idOrden, enviar).subscribe();
       return this.router.navigate(['almacen']); 
     }
   }
@@ -328,13 +324,13 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     });
   }
 
-  async comprobarProveedor(){
-    if( this.orden.proveedor == ''){
+  async comprobarProveedor(proveedor){
+    if( proveedor == ''){
       return;
     }
-    await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
+    await this.ServicioProveedor.buscarContactoEstricto(proveedor).then(
       (res:any) => {
-        this.enviar.proveedor = res.contacto.uid;
+        
     }).catch(
       (err: any) => {  
         return this.errorProveedor();

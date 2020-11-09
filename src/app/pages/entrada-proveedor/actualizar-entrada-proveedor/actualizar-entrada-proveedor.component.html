@@ -1,46 +1,87 @@
-<div class="row">
+
     <div class="col-md-8">
         <div class="card card-user">
             <div class="card-header">
-            <h5 class="card-title">Actualizar Entrada Proveedor</h5>
+            <h5 class="card-title">Crear Entrada</h5>
+            <h5>{{entrada.ordenCompra}}</h5>
             </div>
             <div class="card-body">
-                <form  autocomplete="off" [formGroup]="formEntrada">
-                    <div class="row">
-                        <div class="col-md-3 pr-1">
-                            <div class="form-group">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" formControlName="proveedor" (keyup)="buscarProveedorInput($event)" placeholder="Proveedor"  list="proveedor">
+            <form  autocomplete="off">
+                <div class="row">
+                    <div class="col-md-3 pr-1">
+                        <div class="form-group">
+                        <label>Proveedor</label>
+                        <input type="text" class="form-control" 
+                        [(ngModel)]="entrada.proveedor" 
+                        name="proveedor" 
+                        (keyup)="buscarProveedorInput($event)" (blur)="comprobarProveedor(entrada.proveedor)" 
+                        [attr.placeholder]="entrada.proveedor"  
+                        list="proveedor">
                             <datalist id="proveedor">
                                 <ng-container *ngFor="let proveedor of proveedores">
                                     <option value="{{proveedor.nombre}}">{{proveedor.nombre}}</option>
                                 </ng-container>
                             </datalist>
-                            </div>
-                        </div>
-                        <div class="col-md-3 px-1">
-                            <div class="form-group">
-                            <label>Producto</label>
-                            <input type="text" class="form-control" formControlName="producto" (keyup)="buscarProductoInput($event)" placeholder="Producto" list="producto">
-                            <datalist id="producto">
-                                <ng-container *ngFor="let producto of productos">
-                                    <option value="{{producto.nombre}}">{{producto.nombre}}</option>
-                                </ng-container>
-                            </datalist>
-                            </div>
-                        </div>
-                        <div class="col-md-3 px-1">
-                            <div class="form-group">
-                            <label>Kg</label>
-                            <input type="number" class="form-control" formControlName="kg" placeholder="Kilos">
-                            </div>
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" (click)="actualizarEntrada()" class="btn btn-primary">Actulizar entrada</button>
                         </div>
                     </div>
-                </form>
+                    <div class="col-md-3 px-1">
+                        <div class="form-group">
+                        <label>Fecha</label>
+                        <input type="date" class="form-control" name="fecha" [(ngModel)]="entrada.fecha" [attr.placeholder]="entrada.fecha">
+                        
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="row">
+                            <button type="button" (click)="actualizarEntrada()" class="btn btn-success btn-sm">Listo <i class="nc-icon nc-check-2"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class=" text-primary">
+                                <th>#</th>
+                                <th>
+                                    <button type="button" (click)="anadirFila()" class="btn btn-primary"><i class="nc-icon nc-simple-add"></i> producto</button>
+                                </th>
+                                <th>kg</th>
+                                <th>borrar</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let producto of entrada.productos; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>
+                                        <input type="text" class="form-control"  
+                                        [(ngModel)]="producto.nombre" 
+                                        [name]="producto.nombre" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.placeholder]="producto.nombre" 
+                                        (keyup)="buscarProductoInput($event)" (blur)="comprobarProducto(producto.nombre, i)"
+                                        list="producto">
+                                        <datalist id="producto">
+                                            <ng-container *ngFor="let producto of productos">
+                                                <option value="{{producto.nombre}}">{{producto.nombre}}</option>
+                                            </ng-container>
+                                        </datalist>
+                                    </td>
+                                    <td>
+                                        <input type="number"
+                                        class="form-control"  
+                                        [(ngModel)]=producto.kg
+                                        [name]="producto.kg" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.placeholder]="producto.kg">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" (click)="eliminarProducto(i)"><i class="nc-icon nc-simple-remove"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </form>
             </div>
         </div>
     </div>
-</div>

@@ -18,8 +18,6 @@ export class CrearOrdenComponent implements OnInit {
     fecha: moment().format('YYYY-MM-DD')
   };
 
-  public pasa = true;
-
   public typingTimer;                //timer identifier
   public doneTypingInterval = 300;  //time in ms (5 seconds)
 
@@ -292,16 +290,15 @@ export class CrearOrdenComponent implements OnInit {
     });
   }
 
-  async comprobarProveedor(){
-    if( this.orden.proveedor == ''){
+  async comprobarProveedor(proveedor){
+    if( proveedor == ''){
       return;
     }
-    await this.ServicioProveedor.buscarContactoEstricto(this.orden.proveedor).then(
+    await this.ServicioProveedor.buscarContactoEstricto(proveedor).then(
       (res:any) => {
 
     }).catch(
       (err: any) => {  
-        this.pasa = false;
         return this.errorProveedor();
     });
   }

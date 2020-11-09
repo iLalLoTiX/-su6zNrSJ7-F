@@ -37,4 +37,8 @@ export class OrdenesService {
     return this.http.put(base_url + '/ordenes/registrar/' + id, 'aprobado');
   }
 
+  desmarcarOrden(id){
+    return this.http.put(base_url + '/ordenes/desmarcar/' + id, 'aprobado');
+  }
+
 }
