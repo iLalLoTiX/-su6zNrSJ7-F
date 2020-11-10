@@ -116,14 +116,15 @@ export class EntradaProveedorComponent implements OnInit {
     // Entrada Proveedor
     this.ServicioEntradasProveedor.filtrarEntradaProveedor(this.enviar, this.desde, this.limite).then((a:any)=> {
       this.entradasProveedor = a.entradasProveedor;
-      this.graficaPastel(a.malo, a.kgTotal);
-      this.porcentajeMalo = a.malo / a.kgTotal;
-      this.porcentajeBueno = 1 - this.porcentajeMalo;
+      console.log(this.entradasProveedor);
+      // this.graficaPastel(a.malo, a.kgTotal);
+      // this.porcentajeMalo = a.malo / a.kgTotal;
+      // this.porcentajeBueno = 1 - this.porcentajeMalo;
       
-      console.log(a.kgTotal);
-      console.log(a.malo);
-      console.log(this.porcentajeBueno);
-      console.log(this.porcentajeMalo);
+      // console.log(a.kgTotal);
+      // console.log(a.malo);
+      // console.log(this.porcentajeBueno);
+      // console.log(this.porcentajeMalo);
     }).catch((a:any)=> {console.log(a);});
   }
   

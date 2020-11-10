@@ -24,9 +24,9 @@
                 <div class="col-md-1 px-1">
                     <label>Registros</label>
                     <select  class="form-control" [(ngModel)]="limite" (change)="filtrar()">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="85">80</option>
                     </select>
                 </div>
                 <div class="col-md-2 pr-1">
@@ -121,7 +121,7 @@
                                 <ng-template #popupMerma>
                                     <ng-container *ngFor="let producto of entrada.productos; let i = index">
                                         <span class="badge badge-primary">{{producto.producto.nombre}}</span>
-                                        <span *ngIf="producto.noIdoneo.length > 0; else pendiente" (click)="open(content, producto)" class="badge badge-success">Revisado</span>
+                                        <span *ngIf="producto.noIdoneo.length > 0; else pendiente" (click)="open(content, entrada.uid, producto, i)" class="badge badge-success">Revisado</span>
                                             <ng-template #pendiente>
                                                 <span class="badge badge-warning" (click)="open(content, entrada.uid, producto, i)">mermar</span>
                                             </ng-template>
@@ -150,8 +150,8 @@
         </div>
 
     
-<ng-template #content let-modal>
-    <app-modal-mermar [closeModal]="modalService" [dataEntrada]="dataEntrada" [merma]="merma"></app-modal-mermar>
-  </ng-template>
+    <ng-template #content let-modal>
+        <app-modal-mermar [closeModal]="modalService" [dataEntrada]="dataEntrada" [merma]="merma"></app-modal-mermar>
+    </ng-template>
     </div>
 </div>

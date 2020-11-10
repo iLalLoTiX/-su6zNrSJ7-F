@@ -35,7 +35,7 @@ export class ModalMermar implements OnInit {
 
   ngOnInit(): void {
     console.log(this.dataEntrada);
-    console.log(this.merma.length);
+    console.log(this.merma);
     if(this.merma.length > 0){
       
       for(let i = 0; i < this.merma.length; i++){
@@ -82,7 +82,7 @@ export class ModalMermar implements OnInit {
           'warning');
       }
 
-      if(this.mermas[this.mermas.length - 1].cantidad <= 0){
+      if(this.mermas[this.mermas.length - 1].cantidad < 0){
         return Swal.fire(
           'Atencíon',
           'Agregue una cantidad en la fila ' + i,
@@ -145,6 +145,22 @@ export class ModalMermar implements OnInit {
         });
       }
       else{
+        this.mermas.splice(i, 1);
+      }
+    });
+  }
+
+  eliminarDestino(i){
+    Swal.fire({
+    text: 'Quieres borrar este destino de la orden?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Borrarlo',
+    cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
         this.mermas.splice(i, 1);
       }
     });
