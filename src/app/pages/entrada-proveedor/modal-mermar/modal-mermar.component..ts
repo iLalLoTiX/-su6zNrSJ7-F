@@ -167,6 +167,18 @@ export class ModalMermar implements OnInit {
   }
 
   mermar(){
-    this.ServicioEntradaMerma.mermarEntradaProveedor(this.dataEntrada, this.mermas).subscribe(console.log);
+    this.ServicioEntradaMerma.mermarEntradaProveedor(this.dataEntrada, this.mermas).subscribe(
+      (a:any)=>{
+        Swal.fire(
+          'Exito',
+          '',
+          'success'
+        );
+        this.closeModal.dismissAll();
+      },
+
+      (error)=>{console.log(error);}
+      
+    );
   }
 }

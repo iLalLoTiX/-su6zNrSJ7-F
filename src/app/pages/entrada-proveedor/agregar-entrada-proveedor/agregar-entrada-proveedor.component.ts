@@ -21,6 +21,9 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     fecha: moment().format('YYYY-MM-DD')
   };
 
+  public productoKilos: number;
+  public index: number;
+
   public typingTimer;                //timer identifier
   public doneTypingInterval = 300;  //time in ms (5 seconds)
 
@@ -37,6 +40,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
     private router: Router, 
     private rutaActiva: ActivatedRoute) {
     
+      console.log(this.productoKilos);
       if(this.rutaActiva.snapshot.params.id != 'nuevaEntrada'){
         this.ServicioOrden.getOrden(this.rutaActiva.snapshot.params.id).subscribe((a:any) => {
           this.idOrden = this.rutaActiva.snapshot.params.id;
@@ -45,7 +49,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
           this.orden.proveedor = a.orden.proveedor.nombre;
           
           for(let i = 0; i < a.orden.productos.length; i++){
-            this.orden.productos.push({nombre: a.orden.productos[i].producto.nombre, kg: a.orden.productos[i].cantidad})
+            this.orden.productos.push({nombre: a.orden.productos[i].producto.nombre, kg: a.orden.productos[i].cantidad});
           }
 
         },
@@ -141,13 +145,20 @@ export class AgregarEntradaProveedorComponent implements OnInit {
         'warning');
     }
 
+    if(this.orden.productos[this.orden.productos.length - 1].precio <= 0){
+      return Swal.fire(
+        'Atencíon',
+        'Agregue un precio en la fila ' + i,
+        'warning');
+    }
+
     for(let o = 0; o < i; o++)
     {
       //Si hay asignada una cantidad y un producto, se verifica la existencia del producto  
       await this.ServicioProducto.buscarProductoEstricto(this.orden.productos[o].nombre).then(
         (res:any) => {
           //Si el producto existe, se agrega al array, para preparase para su envio a la peticion a la base de datos
-          enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg});
+          enviar.productos.push({producto: res.producto.uid, cantidad: this.orden.productos[o].kg, precio: this.orden.productos[o].precio});
       }).catch(
         (err: any) => { 
           return this.devolverError(err.error.msg);
@@ -174,6 +185,21 @@ export class AgregarEntradaProveedorComponent implements OnInit {
       await this.ServicioOrden.editarOrden(this.idOrden, enviar).subscribe();
       return this.router.navigate(['almacen']); 
     }
+  }
+
+  calcular(kilos, i){
+    this.productoKilos = kilos;
+    this.index = i;
+  }
+
+  cancelar(){
+    this.productoKilos = undefined;
+  }
+
+  afirmar(data){
+    this.productoKilos = undefined;
+    this.orden.productos[data.index].kg = data.destarado;
+    this.orden.productos[data.index].precio = data.precio;
   }
 
   errorProveedor(){
@@ -267,7 +293,7 @@ export class AgregarEntradaProveedorComponent implements OnInit {
   anadirFila(){
     let i = this.orden.productos.length;
     if(i == 0){
-      this.orden.productos.push({nombre: '', kg: 0});
+      this.orden.productos.push({nombre: '', kg: 0, precio: 0});
     }
     else{
       if(this.orden.productos[i - 1].nombre == ''){
@@ -283,8 +309,15 @@ export class AgregarEntradaProveedorComponent implements OnInit {
           'Agregue una cantidad en la fila ' + i,
           'warning');
       }
+
+      if(this.orden.productos[this.orden.productos.length - 1].precio <= 0){
+        return Swal.fire(
+          'Atencíon',
+          'Agregue un precio en la fila ' + i,
+          'warning');
+      }
       
-      this.orden.productos.push({nombre: '', kg: 0});
+      this.orden.productos.push({nombre: '', kg: 0, precio: 0});
     }
     
     console.log(this.orden.productos.length);

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder} from '@angular/forms';
 import { Producto } from 'app/models/producto.models';
-import { _Producto } from 'app/models/_producto.interface';
 import Swal from 'sweetalert2'
 
 
@@ -12,7 +11,8 @@ import Swal from 'sweetalert2'
 })
 export class PesajeComponent implements OnInit {
 
-  @Input() public producto : _Producto;
+  @Input() public productoKilos;
+  @Input() public index;
 
   @Output() cancelar = new EventEmitter();
   @Output() afirmar = new EventEmitter();
@@ -34,13 +34,20 @@ export class PesajeComponent implements OnInit {
   pagoTotal: number;
 
   // dataProducto
-  public aceptarProducto: _Producto = new Producto();
+  public aceptarProducto = {
+    destarado: 0,
+    precio: 0,
+    index: 0
+  };
 
 
   constructor(private fb: FormBuilder) {
+    console.log(this.productoKilos);
   }
 
   ngOnInit(): void {
+    console.log(this.productoKilos);
+    
     this.crearFormulario();
     this.escucharNumeroCajas();
     this.escucharPesoTarima();
@@ -48,7 +55,6 @@ export class PesajeComponent implements OnInit {
     this.escucharPesoCajas();
     this.escucharPago();
     this.escucharCxKg();
-    console.log()
   }
 
   crearFormulario(){
@@ -66,26 +72,27 @@ export class PesajeComponent implements OnInit {
     this.formEntrada.get('CxKg').valueChanges.subscribe( CxKg => {
       this.calcularPago(this.formEntrada.get('pago').value);
     });
-  }
+  } 
 
   escucharNumeroCajas() {
     this.formEntrada.get('cajas').valueChanges.subscribe( cantidadCajas => {
-    this.destarado = 0;
-    this.pesoCajas = this.formEntrada.get('pesoCaja').value;
-    this.pesoTarima = this.formEntrada.get('pesoTarima').value;
-    this.pesoBascula = this.formEntrada.get('pesoBascula').value;
+    this.destarado      = 0;
+    this.pesoCajas      = this.formEntrada.get('pesoCaja').value;
+    this.pesoTarima     = this.formEntrada.get('pesoTarima').value;
+    this.pesoBascula    = this.formEntrada.get('pesoBascula').value;
     
-    this.destarado =  this.pesoBascula - ((cantidadCajas * this.pesoCajas) + this.pesoTarima);
-    this.pesoPorCaja = this.destarado / cantidadCajas;
+    this.destarado      =  this.pesoBascula - ((cantidadCajas * this.pesoCajas) + this.pesoTarima);
+    this.pesoPorCaja    = this.destarado / cantidadCajas;
     
-    if(cantidadCajas > 1){
-      this.esperadoCaja = this.producto.quantity/cantidadCajas;
-    }
-    else{
-      this.esperadoCaja = this.producto.quantity;
-    }
+      if(cantidadCajas > 1){
+        this.esperadoCaja = this.productoKilos/cantidadCajas;
+      }
+      else{
+        this.esperadoCaja = this.productoKilos;
+      }
+      
+    this.diferencia = this.pesoPorCaja - this.esperadoCaja;
     });
-    this.diferencia = this.esperadoCaja - this.pesoPorCaja;
     this.calcularPago(this.formEntrada.get('pago').value);
   }   
 
@@ -98,7 +105,7 @@ export class PesajeComponent implements OnInit {
     
     this.destarado = this.pesoBascula - ((this.cantidadCajas * this.pesoCajas ) + pesoTarima);
     this.pesoPorCaja = this.destarado / this.cantidadCajas;
-    this.diferencia = this.esperadoCaja - this.pesoPorCaja;
+    this.diferencia = this.pesoPorCaja - this.esperadoCaja;
     this.calcularPago(this.formEntrada.get('pago').value);
     });
   }
@@ -112,7 +119,7 @@ export class PesajeComponent implements OnInit {
 
     this.destarado = pesoBascula - ((this.cantidadCajas * this.pesoCajas ) + this.pesoTarima)
     this.pesoPorCaja = this.destarado / this.cantidadCajas;
-    this.diferencia = this.esperadoCaja - this.pesoPorCaja;
+    this.diferencia = this.pesoPorCaja - this.esperadoCaja;
     
     // this.calcularDifDestTotlEsp();
     // this.calcularTotalPago();
@@ -129,8 +136,7 @@ export class PesajeComponent implements OnInit {
     
     this.destarado = this.pesoBascula - ((this.cantidadCajas * pesoCajas) + this.pesoTarima);
     this.pesoPorCaja = this.destarado / this.cantidadCajas;
-    this.diferencia = this.esperadoCaja - this.pesoPorCaja;
-    
+    this.diferencia = this.pesoPorCaja - this.esperadoCaja;
     // this.calcularDifDestTotlEsp();
     // this.calcularTotalPago();
     this.calcularPago(this.formEntrada.get('pago').value);
@@ -153,9 +159,9 @@ export class PesajeComponent implements OnInit {
   
   enviarProducto(){
     if(this.pagoTotal > 0){
-      this.aceptarProducto.uid = this.producto.uid;
-      this.aceptarProducto.quantity = this.destarado;
-      this.aceptarProducto.price = this.formEntrada.get('pago').value;
+      this.aceptarProducto.destarado = this.destarado;
+      this.aceptarProducto.precio = this.pagoTotal;
+      this.aceptarProducto.index = this.index;
       this.afirmar.emit(this.aceptarProducto);
     }else{
       Swal.fire({
@@ -169,7 +175,7 @@ export class PesajeComponent implements OnInit {
   }
 
   cerrarBascula(){
-    this.producto = undefined;
+    this.productoKilos = undefined;
     this.cancelar.emit();
   }
 

@@ -39,6 +39,7 @@ export class EntradaProveedorComponent implements OnInit {
     producto: '',
     fechaUno: '',
     fechaDos: '',
+    estado: ''
   }
 
   public enviar = {
@@ -46,6 +47,7 @@ export class EntradaProveedorComponent implements OnInit {
     producto: '',
     fechaUno: '',
     fechaDos: '',
+    estado: ''
   }
 
   public merma;
@@ -113,18 +115,9 @@ export class EntradaProveedorComponent implements OnInit {
     this.enviar.fechaUno = this.filtro.fechaUno;
     this.enviar.fechaDos = this.filtro.fechaDos;
     console.log(this.enviar);
-    // Entrada Proveedor
     this.ServicioEntradasProveedor.filtrarEntradaProveedor(this.enviar, this.desde, this.limite).then((a:any)=> {
       this.entradasProveedor = a.entradasProveedor;
       console.log(this.entradasProveedor);
-      // this.graficaPastel(a.malo, a.kgTotal);
-      // this.porcentajeMalo = a.malo / a.kgTotal;
-      // this.porcentajeBueno = 1 - this.porcentajeMalo;
-      
-      // console.log(a.kgTotal);
-      // console.log(a.malo);
-      // console.log(this.porcentajeBueno);
-      // console.log(this.porcentajeMalo);
     }).catch((a:any)=> {console.log(a);});
   }
   
@@ -152,6 +145,10 @@ export class EntradaProveedorComponent implements OnInit {
         });
       } ,this.doneTypingInterval);
     }
+  }
+
+  estado(){
+    this.enviar.estado = this.filtro.estado;
   }
 
   buscarProductoInput($event){
@@ -216,77 +213,15 @@ export class EntradaProveedorComponent implements OnInit {
       
   }
 
-  graficaPastel(bueno: number, malo: number){
-    this.canvas = document.getElementById("chartEmail");
-      this.ctx = this.canvas.getContext("2d");
-      this.chartEmail = new Chart(this.ctx, {
-        type: 'pie',
-        data: {
-          labels: [1, 2, 3],
-          datasets: [{
-            label: "Emails",
-            pointRadius: 0,
-            pointHoverRadius: 0,
-            backgroundColor: [
-              '#ef8157',
-              '#4acccd'
-            ],
-            borderWidth: 0,
-            data: [bueno, malo  ]
-          }]
-        },
-
-        options: {
-
-          legend: {
-            display: false
-          },
-
-          pieceLabel: {
-            render: 'percentage',
-            fontColor: ['white'],
-            precision: 2
-          },
-
-          tooltips: {
-            enabled: false
-          },
-
-          scales: {
-            yAxes: [{
-
-              ticks: {
-                display: false
-              },
-              gridLines: {
-                drawBorder: false,
-                zeroLineColor: "transparent",
-                color: 'rgba(255,255,255,0.05)'
-              }
-
-            }],
-
-            xAxes: [{
-              barPercentage: 1.6,
-              gridLines: {
-                drawBorder: false,
-                color: 'rgba(255,255,255,0.1)',
-                zeroLineColor: "transparent"
-              },
-              ticks: {
-                display: false,
-              }
-            }]
-          },
-        }
-      });
-  }
-
   devolverError(error){
     Swal.fire(
       'Atencíon',
       error,
       'warning');
+  }
+
+  estadisticas(){
+    this.router.navigate(['estadisticaEntradaProveedor']);
   }
 
 }

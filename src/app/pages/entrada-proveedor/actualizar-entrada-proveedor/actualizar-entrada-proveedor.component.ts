@@ -19,6 +19,9 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
     productos: new Array(),
     fecha: moment().format('YYYY-MM-DD')
   };
+  
+  public productoKilos: number;
+  public index: number;
 
   public typingTimer;                //timer identifier
   public doneTypingInterval = 300;  //time in ms (5 seconds)
@@ -42,7 +45,7 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
           this.entrada.ordenCompra = a.EntradaExiste.ordenCompra;
           
           for(let i = 0; i < a.EntradaExiste.productos.length; i++){
-            this.entrada.productos.push({nombre: a.EntradaExiste.productos[i].producto.nombre, kg: a.EntradaExiste.productos[i].cantidad})
+            this.entrada.productos.push({nombre: a.EntradaExiste.productos[i].producto.nombre, kg: a.EntradaExiste.productos[i].cantidad, precio: a.EntradaExiste.productos[i].precio})
           }
         },
         err => console.log(err)
@@ -50,6 +53,21 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  calcular(kilos, i){
+    this.productoKilos = kilos;
+    this.index = i;
+  }
+
+  cancelar(){
+    this.productoKilos = undefined;
+  }
+
+  afirmar(data){
+    this.productoKilos = undefined;
+    this.entrada.productos[data.index].kg = data.destarado;
+    this.entrada.productos[data.index].precio = data.precio;
   }
 
   buscarProveedorInput($event){
@@ -140,7 +158,7 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
       await this.ServicioProducto.buscarProductoEstricto(this.entrada.productos[o].nombre).then(
         (res:any) => {
           //Si el producto existe, se agrega al array, para preparase para su envio a la peticion a la base de datos
-          enviar.productos.push({producto: res.producto.uid, cantidad: this.entrada.productos[o].kg});
+          enviar.productos.push({producto: res.producto.uid, cantidad: this.entrada.productos[o].kg, precio: this.entrada.productos[o].precio});
       }).catch(
         (err: any) => { 
           return this.devolverError(err.error.msg);
@@ -254,7 +272,7 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
   anadirFila(){
     let i = this.entrada.productos.length;
     if(i == 0){
-      this.entrada.productos.push({nombre: '', kg: 0});
+      this.entrada.productos.push({nombre: '', kg: 0, precio: 0});
     }
     else{
       if(this.entrada.productos[i - 1].nombre == ''){
@@ -271,7 +289,7 @@ export class ActualizarEntradaProveedorComponent implements OnInit {
           'warning');
       }
       
-      this.entrada.productos.push({nombre: '', kg: 0});
+      this.entrada.productos.push({nombre: '', kg: 0, precio: 0});
     }
     
     console.log(this.entrada.productos.length);

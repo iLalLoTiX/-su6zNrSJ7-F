@@ -8,8 +8,6 @@ import { IconsComponent }                       from '../../pages/icons/icons.co
 import { MapsComponent }                        from '../../pages/maps/maps.component';
 import { NotificationsComponent }               from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }                     from '../../pages/upgrade/upgrade.component';
-import { EntradasComponent }                    from '../../pages/entradas/entradas.component';
-import { FacturaCompraComponent }               from '../../pages/entradas/factura-compra/factura-compra.component';
 import { CajasComponent }                       from '../../pages/inventario/cajas/cajas.component';
 import { EmpleadosComponent }                   from '../../pages/recursos-humanos/empleados/empleados.component';
 import { EmpleadoComponent }                    from '../../pages/recursos-humanos/empleados/empleado/empleado.component';
@@ -17,6 +15,7 @@ import { RecursosHumanosComponent }             from '../../pages/recursos-human
 import { InventarioComponent }                  from '../../pages/inventario/inventario.component';
 import { AdministrarEntradaCajasComponent }     from '../../pages/inventario/entrada-cajas/administrar-entrada-cajas/administrar-entrada-cajas.component';
 import { EntradaProveedorComponent }            from '../../pages/entrada-proveedor/entrada-proveedor.component';
+import { EstadisticaComponent }                 from '../../pages/entrada-proveedor/estadistica/estadistica.component';
 import { ContactoComponent }                    from '../../pages/contacto/contacto.component';
 import { ProductosComponent }                   from '../../pages/productos/productos.component';
 import { ProductoComponent }                    from '../../pages/productos/producto/producto.component';
@@ -42,8 +41,6 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'notifications',                        component: NotificationsComponent },
     { path: 'upgrade',                              component: UpgradeComponent },
 
-    { path: 'entradas',                             component: EntradasComponent },
-
     { path: 'cajas',                                component: CajasComponent },
     { path: 'empleados',                            component: EmpleadosComponent },
     { path: 'recursoshumanos',                      component: RecursosHumanosComponent },
@@ -52,8 +49,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'inventario/administrarEntradaCajas',   component: AdministrarEntradaCajasComponent },
     
     { path: 'entradaProveedor',                     component: EntradaProveedorComponent },
-    { path: 'crearEntradaProveedor/:id',                component: AgregarEntradaProveedorComponent },
+    { path: 'crearEntradaProveedor/:id',            component: AgregarEntradaProveedorComponent },
     { path: 'actualizarEntradaProveedor/:id',       component: ActualizarEntradaProveedorComponent },
+    { path: 'estadisticaEntradaProveedor',          component: EstadisticaComponent },
 
     { path: 'contacto',                             component: ContactoComponent },
     { path: 'productos',                            component: ProductosComponent },

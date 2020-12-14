@@ -1,5 +1,8 @@
 
-    <div class="col-md-8">
+    <ng-container *ngIf="productoKilos != undefined">
+        <app-pesaje [productoKilos]="productoKilos" [index]="index" (cancelar)="cancelar($event)" (afirmar)="afirmar($event)"></app-pesaje>
+    </ng-container>
+    <div class="col-md-12" *ngIf="productoKilos == undefined">
         <div class="card card-user">
             <div class="card-header">
             <h5 class="card-title">Crear Entrada</h5>
@@ -27,7 +30,7 @@
                     <div class="col-md-3 px-1">
                         <div class="form-group">
                         <label>Fecha</label>
-                        <input type="date" class="form-control" name="fecha" [(ngModel)]="orden.fecha" [attr.placeholder]="orden.fecha">
+                            <input type="date" class="form-control" name="fecha" [(ngModel)]="orden.fecha" [attr.placeholder]="orden.fecha">
                         
                         </div>
                     </div>
@@ -46,7 +49,8 @@
                                     <button type="button" (click)="anadirFila()" class="btn btn-primary"><i class="nc-icon nc-simple-add"></i> producto</button>
                                 </th>
                                 <th>kg</th>
-                                <th>borrar</th>
+                                <th>precio</th>
+                                <th>acción</th>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let producto of orden.productos; let i = index">
@@ -74,7 +78,16 @@
                                         [attr.placeholder]="producto.kg">
                                     </td>
                                     <td>
+                                        <input type="number"
+                                        class="form-control"  
+                                        [(ngModel)]=producto.precio
+                                        [name]="producto.precio" 
+                                        [ngModelOptions]="{standalone: true}"
+                                        [attr.placeholder]="producto.precio">
+                                    </td>
+                                    <td>
                                         <button type="button" class="btn btn-danger btn-sm" (click)="eliminarProducto(i)"><i class="nc-icon nc-simple-remove"></i></button>
+                                        <button type="button" class="btn btn-info btn-sm" (click)="calcular(producto.kg, i)"><i class="nc-icon nc-app"></i></button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -85,160 +98,3 @@
             </div>
         </div>
     </div>
-
-    
-    
-<!-- <div class="card-header">
-    <div class="row">
-      <div class="col-md-4 pr-1">
-          <div class="form-group">
-              <button (click)="cerrarBascula()" class="btn btn-danger">Deshacer</button>
-          </div>
-      </div>
-    </div>
-    <form [formGroup]="formEntrada" class="form-material">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-2 col-6">
-                    
-                    <label class="control-label">Kg/C</label>
-                    <div class="form-group">
-                        <label class="switchBtn">
-                            <input type="checkbox"
-                            name="CoKg"
-                            formControlName="CxKg" 
-                            class="form-control" >
-                            <div class="slide round">On</div>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-2 col-3">
-                    <label class="control-label">Cajas</label>
-                    <div class="form-group">
-                        <label class="switchBtn">
-                            <input type="checkbox" class="form-control" >
-                            <div class="slide round">On</div>
-                        </label>
-                    </div>
-                </div>
-                <div class="col-md-2 col-6">
-                    <div class="form-group">
-                        <label>Cajas</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Cajas"
-                        formControlName="cajas"
-                        name="cajas">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="form-group">
-                        <label>Tarima</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Peso"
-                        formControlName="pesoTarima"
-                        name="pesoTarima">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="form-group">
-                        <label>Bascula</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Peso"
-                        formControlName="pesoBascula"
-                        name="pesoBascula">
-                    </div>
-                </div>
-                <div class="col-md-2 col-4">
-                    <div class="form-group">
-                        <label>Peso Caja</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Peso"
-                        formControlName="pesoCaja"
-                        name="pesoBascula">
-                    </div>
-                </div>
-                
-                <div class="col-md-2 col-4">
-                    
-                    <div class="form-group">
-                        <label >$ Kg</label>
-                        <label >$ C</label>
-                        <input type="number" class="form-control" 
-                        placeholder="$"
-                        formControlName="pago"
-                        name="pago">
-                    </div>
-    
-                </div>
-            </div>
-            <div class="row">
-                
-               <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <label>Tipo</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Tipo"
-                        name="pesoCaja">
-                    </div>
-                </div> 
-                
-            </div>
-            <div class="row">
-                <div class="col-md-2 col-sm-4">
-                    <div class="form-group">
-                        <label>Real Caja</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Peso"
-                        value="{{pesoPorCaja}}"
-                        disabled>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <label>Esperado Caja</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Peso"
-                        value="{{esperadoCaja}}"
-                        name="pesoEsperado"
-                        disabled>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <label>Diferencia</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Tipo"
-                        value="{{diferencia}}"
-                        disabled>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <label>Destarado</label>
-                        <input type="number" class="form-control" 
-                        placeholder="Destarado"
-                        value="{{destarado}}"
-                        disabled>
-                    </div>
-                </div>                
-                <div class="col-md-2 col-sm-2">
-                    <div class="form-group">
-                        <label>$ Total</label>
-                        <input
-                        type="number" class="form-control" 
-                        placeholder="$"
-                        value="{{pagoTotal}}"
-                        disabled>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <label></label>
-                    <div class="form-group">
-                        <button (click)="enviarProducto()" class="btn btn-success"><i class="nc-icon nc-send"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </form>
-</div> -->

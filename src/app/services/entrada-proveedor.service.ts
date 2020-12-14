@@ -40,12 +40,14 @@ export class EntradaProveedorService {
   }
 
   mermarEntradaProveedor(dataEntrada: any, mermas){
-    console.log(dataEntrada.id, mermas);
     return this.http.put(base_url + '/entradaProveedor/mermar/' + dataEntrada.id, {mermas, index: dataEntrada.index});
   }
   
   filtrarEntradaProveedor(filtro, desde: number, limite: number){
-    console.log(filtro);
     return this.http.get(base_url + '/entradaProveedor/filtrarFechas?desde=' + desde + '&limite=' + limite , {params: filtro}).toPromise();
+  }
+
+  estadisticaEntradaProveedor(filtro, desde: number, limite: number){
+    return this.http.get(base_url + '/entradaProveedor/estadisticasEntradasProveedor', {params: filtro}).toPromise();
   }
 }

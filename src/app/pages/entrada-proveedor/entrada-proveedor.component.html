@@ -2,24 +2,6 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">Filtrar Entradas</h5>
-            
-            <!-- <div class="col-md-4">
-                <div class="card ">
-                <div class="card-header ">
-                    <h5 class="card-title">Merma Estadisticas</h5>
-                    <p class="card-category">Bueno: {{porcentajeBueno | percent}} | Malo: {{porcentajeMalo| percent}}</p>
-                </div>
-                <div class="card-body ">
-                    <canvas id="chartEmail"></canvas>
-                </div>
-                <div class="card-footer ">
-                    <div class="legend">
-                    <i class="fa fa-circle text-primary"></i> Bueno
-                    <i class="fa fa-circle text-danger"></i> Malo
-                    </div>
-                </div>
-                </div>
-            </div> -->
             <div class="row">
                 <div class="col-md-1 px-1">
                     <label>Registros</label>
@@ -63,10 +45,18 @@
                         <input class="form-control" type="date" [(ngModel)]="filtro.fechaDos" name="fin">
                     </div>
                 </div>
-                <div class="col-md-1 pr-1">
-                <button type="button" class="btn btn-warning btn-sm" (click)="filtrar()"><i class="nc-icon nc-zoom-split"></i></button>
-                <button type="button" class="btn btn-primary btn-sm" (click)="refrescarEntradaProveedor()"><i class="nc-icon nc-refresh-69"></i> </button>
-                <button type="button" class="btn btn-success btn-sm" (click)="crearEntradaProveedor()"><i class="nc-icon nc-simple-add"></i></button>
+                <div class="col-md-1 px-1">
+                    <label>Estado</label>
+                    <select  class="form-control" [(ngModel)]="filtro.estado" (change)="estado()">
+                        <option value="true">Revisado</option>
+                        <option value="false">Pendiente</option>
+                    </select>
+                </div>
+                <div class="col-md-2 pr-1">
+                    <button type="button" class="btn btn-warning btn-sm" (click)="filtrar()"><i class="nc-icon nc-zoom-split"></i></button>
+                    <button type="button" class="btn btn-primary btn-sm" (click)="refrescarEntradaProveedor()"><i class="nc-icon nc-refresh-69"></i> </button>
+                    <button type="button" class="btn btn-success btn-sm" (click)="crearEntradaProveedor()"><i class="nc-icon nc-simple-add"></i></button>
+                    <button type="button" class="btn btn-info btn-sm" (click)="estadisticas()"><i class="nc-icon nc-chart-pie-36"></i></button>
                 </div>
             </div>
         </div>

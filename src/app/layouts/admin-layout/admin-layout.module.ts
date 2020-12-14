@@ -13,9 +13,7 @@ import { IconsComponent }                         from '../../pages/icons/icons.
 import { MapsComponent }                          from '../../pages/maps/maps.component';
 import { NotificationsComponent }                 from '../../pages/notifications/notifications.component';
 import { UpgradeComponent }                       from '../../pages/upgrade/upgrade.component';
-import { EntradasComponent }                      from '../../pages/entradas/entradas.component';
-import { FacturaCompraComponent }                 from '../../pages/entradas/factura-compra/factura-compra.component';
-import { PesajeComponent }                        from '../../pages/entradas/pesaje/pesaje.component';
+import { PesajeComponent }                        from '../../pages/entrada-proveedor/agregar-entrada-proveedor/pesaje/pesaje.component';
 import { CajasComponent }                         from '../../pages/inventario/cajas/cajas.component';
 import { ModalCajasComponent }                    from '../../pages/inventario/cajas/modal-cajas/modal-cajas.component';
 import { EmpleadosComponent }                     from '../../pages/recursos-humanos/empleados/empleados.component';
@@ -35,6 +33,7 @@ import { AgregarContactoComponent }               from '../../pages/contacto/agr
 import { ActualizarContactoComponent }            from '../../pages/contacto/actualizar-contacto/actualizar-contacto.component';
 import { AgregarEntradaProveedorComponent }       from '../../pages/entrada-proveedor/agregar-entrada-proveedor/agregar-entrada-proveedor.component';
 import { ActualizarEntradaProveedorComponent }    from '../../pages/entrada-proveedor/actualizar-entrada-proveedor/actualizar-entrada-proveedor.component';
+import { EstadisticaComponent }                   from '../../pages/entrada-proveedor/estadistica/estadistica.component';
 import { ModalMermar }                            from '../../pages/entrada-proveedor/modal-mermar/modal-mermar.component.';
 import { OrdenesComponent }                       from '../../pages/ordenes/ordenes.component';
 import { OrdenesFechaComponent }                  from '../../pages/ordenes/ordenes-fecha/ordenes-fecha.component';
@@ -63,8 +62,6 @@ import { NgbModule }                              from '@ng-bootstrap/ng-bootstr
     IconsComponent,
     MapsComponent,
     NotificationsComponent,
-    EntradasComponent,
-    FacturaCompraComponent,
     PesajeComponent,
     CajasComponent,
     ModalCajasComponent,
@@ -79,6 +76,7 @@ import { NgbModule }                              from '@ng-bootstrap/ng-bootstr
     EntradaProveedorComponent,
     AgregarEntradaProveedorComponent,
     ActualizarEntradaProveedorComponent,
+    EstadisticaComponent,
     ContactoComponent,
     ProductosComponent,
     ProductoComponent,
