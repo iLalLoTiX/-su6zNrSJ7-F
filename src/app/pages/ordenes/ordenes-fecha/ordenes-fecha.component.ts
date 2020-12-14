@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdenesService } from 'app/services/ordenes.service';
 import * as moment from 'moment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ordenes-fecha',
@@ -74,7 +75,17 @@ export class OrdenesFechaComponent implements OnInit {
   }
 
   eliminarOrden(){
-    this.servicioOrdenes.deleteOrden(this.orden).subscribe(console.log);
+    this.servicioOrdenes.deleteOrden(this.orden).subscribe((data:any)=>{
+      Swal.fire(
+        'Exito',
+        'Se elimino correctamente la orden',
+        'success');
+    }, (error:any)=>{
+      Swal.fire(
+        'Exito',
+        error,
+        'success');
+    });
     console.log(this.orden);
   }
 
@@ -92,7 +103,17 @@ export class OrdenesFechaComponent implements OnInit {
   }
 
   desmarcar(){
-    this.servicioOrdenes.desmarcarOrden(this.orden).subscribe(console.log);
+    this.servicioOrdenes.desmarcarOrden(this.orden).subscribe((data:any)=>{
+      Swal.fire(
+        'Exito',
+        'Se desmarco correctamente la orden',
+        'success');
+    }, (error:any)=>{
+      Swal.fire(
+        'Exito',
+        error,
+        'success');
+    });
   }
 
 }

@@ -177,7 +177,8 @@ export class ModalMermar implements OnInit {
         this.closeModal.dismissAll();
       },
 
-      (error)=>{console.log(error);}
+        (error)=>{console.log(error);
+      }
       
     );
   }

@@ -27,6 +27,7 @@
             </ng-template>
             <td>
                 <button *ngIf="orden.estado == 'registrado'" type="button" (click)="desmarcar(orden.uid)" class="btn btn-warning btn-sm">Desmarcar</button>
+                <button *ngIf="orden.estado == 'pendiente'" class="btn btn-danger btn-sm" (click)="eliminarOrden(orden.uid)"><i class="nc-icon nc-simple-remove"></i></button>
                 <button *ngIf="orden.estado == 'pendiente'" class="btn btn-primary btn-sm" (click)="editarOrden(orden.uid)"><i class="nc-icon nc-minimal-up"></i></button>
                 <button *ngIf="hoy == momento(orden.fechaDeEntrada) && orden.estado == 'pendiente'" class="btn btn-warning btn-sm" (click)="registrarOrden(orden.uid)"><i class="nc-icon nc-check-2"></i></button>
             </td>
